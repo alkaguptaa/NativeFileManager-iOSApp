@@ -12,12 +12,11 @@ struct TextProperties:Codable {
     var text:String?
     var tag:Int?
     var properties:[Properties]?
-    init(text: String? = nil,tag:Int? = nil,
-             properties: [Properties]? = nil) {
+    init(tag:Int? = nil,text:String?=nil) {
             
-            self.text = text
+            
             self.tag = tag
-            self.properties = properties
+        self.text = text
             
         }
     enum CodingKeys: String, CodingKey {
@@ -43,14 +42,9 @@ struct ScrollBarProperties:Codable {
     var title:TextProperties?
     var tag:Int?
     var properties:[Properties]?
-    init(itemProperties:[Properties]?=nil,title:TextProperties?=nil,image:ImagePropterties?=nil, tag:Int? = nil,
-        properties: [Properties]? = nil) {
+    init( tag:Int? = nil) {
         self.tag = tag
-        
-        self.itemProperties = itemProperties
-        self.image = image
-        self.title = title
-        self.properties = properties
+       
             
         }
     enum CodingKeys: String, CodingKey {
@@ -81,15 +75,9 @@ struct TableViewProperties:Codable {
     var subtitle:TextProperties?
     var tag:Int?
     var properties:[Properties]?
-    init(itemProperties:[Properties]?=nil,title:TextProperties?=nil,subtitle:TextProperties?=nil,image:ImagePropterties?=nil, tag:Int? = nil,
-        properties: [Properties]? = nil) {
+    init(tag:Int? = nil) {
         self.tag = tag
         
-        self.itemProperties = itemProperties
-        self.image = image
-        self.title = title
-        self.subtitle = subtitle
-        self.properties = properties
             
         }
     enum CodingKeys: String, CodingKey {

@@ -17,15 +17,11 @@ struct FoldersContainer:ViewProtocol,Codable{
     var order:Int?
     var tag:Int?
     var properties:[Properties]?
-    init(title:TextProperties? = nil, viewAll:TextProperties? = nil, scroll:[FolderElement]? = nil,horizontalBar:ScrollBarProperties? = nil,  tag:Int? = nil ,order:Int, properties:[Properties]?=nil){
-        self.title = title
-        self.viewAll = viewAll
-        self.scroll = scroll
-        self.horizontalBar = horizontalBar
+    init(tag:Int ,order:Int){
        
         self.order = order
         self.tag = tag
-        self.properties = properties
+        
     }
     
     init(from decoder: Decoder) throws {

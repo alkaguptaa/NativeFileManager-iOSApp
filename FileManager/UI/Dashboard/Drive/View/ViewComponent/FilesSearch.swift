@@ -15,14 +15,11 @@ struct FilesSearch:ViewProtocol,Codable {
     var order:Int?
     var tag: Int?
     var properties:[Properties]?
-    init(title:TextProperties? = nil,  icon:ImagePropterties? = nil, order:Int,tag:Int? = nil,searchHeight:CGFloat?=nil,containerWidth:CGFloat?=nil, properties:[Properties]? = nil){
-        self.title = title
-        self.icon = icon
+    init(tag:Int, order:Int){
+        
         self.order = order
         self.tag = tag
-        self.properties = properties
-        self.searchHeight = searchHeight
-        self.containerWidth = containerWidth
+       
     }
    
     

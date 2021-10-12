@@ -24,12 +24,10 @@ struct FilesStorage:ViewProtocol,Codable {
         case properties
     }
     
-    init(title:TextProperties? = nil, subtitle:TextProperties? = nil, progress:StackProperties? = nil, order:Int, properties:[Properties]? = nil){
-        self.title = title
-        self.subtitle = subtitle
-        self.progress = progress
+    init( tag:Int, order:Int){
         self.order = order
-        self.properties = properties
+        self.tag = tag
+       
     }
    
     

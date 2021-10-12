@@ -15,13 +15,11 @@ struct FilesHeader:ViewProtocol,Codable {
     var order:Int?
     var tag: Int?
     var properties:[Properties]?
-    init(title:TextProperties? = nil, subtitle:TextProperties? = nil, image:ImagePropterties? = nil, order:Int,tag:Int? = nil, properties:[Properties]? = nil){
-        self.title = title
-        self.subtitle = subtitle
-        self.image = image
+    init(tag:Int, order:Int){
+        
         self.order = order
         self.tag = tag
-        self.properties = properties
+        
     }
    
     
