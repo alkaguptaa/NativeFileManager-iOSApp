@@ -11,6 +11,7 @@ class FileListView: UIViewController, FileListPresenterToViewProtocol,ViewProtoc
     var tag: Int?
     
     
+    
     var tableContentSize:CGSize?
     
     static let fileCellIdentifire:String = "fileCell"
@@ -52,6 +53,22 @@ class FileListView: UIViewController, FileListPresenterToViewProtocol,ViewProtoc
     var fileList = [File]()
     var templateView: UIView!
     
+    lazy var fileTemplate:FilesTemplate = {
+        var template = FilesTemplate(name: "drive",order: 1)
+        if  selectedFile == nil {
+            template.driveHeader = FileListTemplate.getSubTemplateHeader()
+            template.driveStorage = FileListTemplate.getSubTemplateStorage()
+            template.driveSearch = FileListTemplate.getSubTemplateSearch()
+        }
+        
+        template.driveFoldersContainer = FileListTemplate.getSubTemplateFolders()
+        template.driveFilesContainer = FileListTemplate.getSubTemplateFiles()
+        template.properties = [
+        
+        ]
+        return template
+    }()
+    
     init(file:File?)
     {
         self.selectedFile = file
@@ -80,14 +97,15 @@ class FileListView: UIViewController, FileListPresenterToViewProtocol,ViewProtoc
         
     }
     
-    
-    func setupView(){
-        let template = getTemplate()
+    func addTemplateView(template:FilesTemplate,templateView:UIView){
+        
+       
+        templateView.translatesAutoresizingMaskIntoConstraints = false
+        scrollContentView.addSubview(templateView)
+        scrollView.addSubview(scrollContentView)
+        self.view.addSubview(scrollView)
         
         
-        // Added View
-        
-        templateView = template.getView()
         templateView.translatesAutoresizingMaskIntoConstraints = false
         scrollContentView.addSubview(templateView)
         scrollView.addSubview(scrollContentView)
@@ -96,18 +114,16 @@ class FileListView: UIViewController, FileListPresenterToViewProtocol,ViewProtoc
         if let attributes = template.properties {
             setRelativeStackProperties(view: templateView, relativeView: scrollContentView, properties: attributes)
         }
-            
-        //End
-       
-       ///// INSERT VALUES IN HEADER /////
-        
+    }
+    
+    func updateTemplateHeaderSection(template:FilesTemplate){
         
         if let tag = template.driveHeader?.title?.tag, let titleLbl = self.view.viewWithTag(tag) as? UILabel{
-            titleLbl.text = "FileManger"
+            titleLbl.text = "Header"
         }
         
         if let tag = template.driveHeader?.subtitle?.tag, let titleLbl = self.view.viewWithTag(tag) as? UILabel{
-            titleLbl.text = "Static Template and Dynamic Styling from Backend"
+            titleLbl.text = "Sub Header"
         }
         
         if let tag = template.driveHeader?.image?.tag, let imageView = self.view.viewWithTag(tag) as? UIImageView{
@@ -115,10 +131,9 @@ class FileListView: UIViewController, FileListPresenterToViewProtocol,ViewProtoc
                 imageView.image = UIImage(named: resource)
             }
         }
-        
-        ///////////////////// END /////////////////////
-        
-        ///// INSERT VALUES IN STORAGE /////
+    }
+    
+    func updateTemplateStorageSection(template:FilesTemplate){
         if let tag = template.driveStorage?.title?.tag, let titleLbl = self.view.viewWithTag(tag) as? UILabel{
             titleLbl.text = "21MB"
             titleLbl.sizeToFit()
@@ -134,10 +149,9 @@ class FileListView: UIViewController, FileListPresenterToViewProtocol,ViewProtoc
             progressStack.addArrangedSubview(subtitleLbl)
         }
         
-        ///////////////////// END /////////////////////
-        
-        ///// INSERT VALUES IN STORAGE /////
-        
+    }
+    
+    func updateTemplateSearchSection(template:FilesTemplate){
         if let tag = template.driveSearch?.tag, let searchStack = self.view.viewWithTag(tag) as? UIStackView{
             let searchBar = UISearchBar()
            // let image = getImageWithColor(color: UIColor.clear, size: CGSize(width: 1, height: searchHeight!))
@@ -169,10 +183,9 @@ class FileListView: UIViewController, FileListPresenterToViewProtocol,ViewProtoc
             
             searchStack.addArrangedSubview(searchBar)
         }
-        ///////////////////////END///////////////////
-        
-        ///// INSERT FOLDERS IN SCROLL /////
-        
+    }
+    
+    func updateTemplateFolderSection(template:FilesTemplate){
         if let tag = template.driveFoldersContainer?.horizontalBar?.tag, let folderStack = self.view.viewWithTag(tag) as? UIStackView{
             let s = UIScrollView()
             
@@ -224,14 +237,10 @@ class FileListView: UIViewController, FileListPresenterToViewProtocol,ViewProtoc
                 
             ])
         }
-        
-        
-        
-        ///////////////////////END///////////////////
-        
-        ///// INSERT FOLDERS IN SCROLL /////
-        
-        if let tableContainer = self.view.viewWithTag(FileListView.TAG_TABLE_CONTAINER) {
+    }
+    
+    func updateTemplateFilesSection(template:FilesTemplate){
+        if let tableContainer = self.view.viewWithTag((template.driveFilesContainer?.table?.tag)!) as? UIStackView {
             tableContainerView = tableContainer
             self.filesTableView = UITableView(frame: CGRect.zero)
             
@@ -259,24 +268,37 @@ class FileListView: UIViewController, FileListPresenterToViewProtocol,ViewProtoc
             ])
 
         }
-        
-        //////////////////////END///////////////////////////
-        
-        
+    }
+    func setupView(){
+        let template = self.fileTemplate
+        let templateView = template.getView()
+        addTemplateView(template: template, templateView: templateView)
+        updateTemplateHeaderSection(template: template)
+        updateTemplateStorageSection(template: template)
+        updateTemplateSearchSection(template: template)
+        updateTemplateFolderSection(template: template)
+        updateTemplateFilesSection(template: template)
         self.setScrollingConstraints(templateView: templateView)
         
         FileListRouter.createFileListModule(fileListRef: self)
         presenter?.loadFileList(file:selectedFile)
-
         
-        do{
-            let data = try  JSONEncoder().encode(template)
-            let jsonString = String(data:data, encoding: .utf8)
-            print(jsonString)
-            
-        }catch{
-            print("error")
-        }
+        /**
+         ********************************
+         *THIS IS TO PRINT THE DESIGN JSONN
+         ********************************
+         do{
+             let data = try  JSONEncoder().encode(template)
+             let jsonString = String(data:data, encoding: .utf8)
+             print(jsonString)
+
+         }catch{
+             print("error")
+         }
+         
+         **/
+        
+
     }
     
     
@@ -286,6 +308,37 @@ class FileListView: UIViewController, FileListPresenterToViewProtocol,ViewProtoc
         }
         
         
+    }
+    
+    @objc func menuButtonClicked(sender:UIButton){
+        let alert = UIAlertController(title: "Actions", message: "Please Select an Option", preferredStyle: .actionSheet)
+            
+            alert.addAction(UIAlertAction(title: "View", style: .default , handler:{ (UIAlertAction)in
+                print("User click View button")
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Download", style: .default , handler:{ (UIAlertAction)in
+                print("User click Download button")
+            }))
+
+            alert.addAction(UIAlertAction(title: "Rename", style: .default , handler:{ (UIAlertAction)in
+                print("User click Rename button")
+            }))
+                alert.addAction(UIAlertAction(title: "Delete", style: .default , handler:{ (UIAlertAction)in
+                    print("User click Delete button")
+                }))
+            
+            alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler:{ (UIAlertAction)in
+                print("User click Dismiss button")
+            }))
+
+            
+            //uncomment for iPad Support
+            //alert.popoverPresentationController?.sourceView = self.view
+
+            self.present(alert, animated: true, completion: {
+                print("completion block")
+            })
     }
     func setScrollingConstraints(templateView:UIView){
         
@@ -331,9 +384,9 @@ class FileListView: UIViewController, FileListPresenterToViewProtocol,ViewProtoc
         // look here
         // ****
         
-        var tFiles:[File] = []
+       
         var tFolders:[File] = []
-        tFiles = files.filter{ $0.isFolder == false }
+        //tFiles = files.filter{ $0.isFolder == false }
         tFolders = files.filter{ $0.isFolder == true }
         
         let height = 72 * files.count
@@ -349,47 +402,31 @@ class FileListView: UIViewController, FileListPresenterToViewProtocol,ViewProtoc
         filesTableView.isScrollEnabled = false
         
         
-        if let scrollView = self.view.viewWithTag(FileListView.TAG_FOLDER_SCROLL) as? UIScrollView {
-            let hScroll = getHStack(spacing: 10,alignment: .fill, distribution: .fillEqually)
-            hScroll.translatesAutoresizingMaskIntoConstraints = false
-            var contentSize:CGFloat = 0.0
-            for (index,folder) in tFolders.enumerated() {
-                var folderElement = FolderElement(order: index)
-                folderElement.title = TextProperties()
-                folderElement.image = ImagePropterties()
-                folderElement.image?.resource = "folder"
-                folderElement.title?.text = folder.title?.text
-                folderElement.image?.properties = [
-                    Properties(attr: Attributes.backgroundColor.rawValue, value: "#OOOOOOFF"),
-                    Properties(attr: Attributes.width.rawValue, value: "40.0"),
-                    
-                ]
-                folderElement.title?.properties = [
-                    Properties(attr: Attributes.height.rawValue, value: "20"),
-                    Properties(attr: Attributes.fontSize.rawValue, value: "12"),
-                    Properties(attr: Attributes.fontFamily.rawValue, value: "OpenSans-SemiBold"),
-                    Properties(attr: Attributes.textAlignment.rawValue, value: "center"),
-                    Properties(attr: Attributes.topPadding.rawValue, value:"8")
-                ]
-                
-                folderElement.properties = [
-                    Properties(attr: Attributes.width.rawValue, value: "104"),
-                    Properties(attr: Attributes.height.rawValue, value: "104")
-                ]
-                hScroll.addArrangedSubview(folderElement.getView())
-                
-                contentSize+=112.0
-            }
-            scrollView.addSubview(hScroll)
-            scrollView.contentSize = CGSize(width:contentSize,height: hScroll.frame.height)
-            
-            NSLayoutConstraint.activate([
-                hScroll.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
-                hScroll.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-                hScroll.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor),
-            ])
-            
-        }
+//        if let scrollView = self.view.viewWithTag(FileListView.TAG_FOLDER_SCROLL) as? UIScrollView {
+//            let hScroll = getHStack(spacing: 10,alignment: .fill, distribution: .fillEqually)
+//            hScroll.translatesAutoresizingMaskIntoConstraints = false
+//            var contentSize:CGFloat = 0.0
+//            for (index,folder) in tFolders.enumerated() {
+//                var folderElement = FolderElement(order: index)
+//                folderElement.title = fileTemplate.driveFoldersContainer?.horizontalBar?.title
+//                folderElement.image = fileTemplate.driveFoldersContainer?.horizontalBar?.image
+//                folderElement.image?.resource = "folder"
+//                folderElement.title?.text = folder.title?.text
+//                
+//                hScroll.addArrangedSubview(folderElement.getView())
+//                
+//                contentSize+=112.0
+//            }
+//            scrollView.addSubview(hScroll)
+//            scrollView.contentSize = CGSize(width:contentSize,height: hScroll.frame.height)
+//            
+//            NSLayoutConstraint.activate([
+//                hScroll.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
+//                hScroll.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+//                hScroll.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor),
+//            ])
+//            
+//        }
         
         
         
@@ -411,21 +448,23 @@ extension FileListView: UITableViewDelegate, UITableViewDataSource {
         let cell = filesTableView.dequeueReusableCell(withIdentifier: FileListView.fileCellIdentifire, for: indexPath) as! FileTableViewCell
         let file = fileList[indexPath.row]
         cell.titleLabel.text = file.title?.text
+        
         cell.storageLabel.text = file.size?.text
         cell.fileImage.image = UIImage(named: "folder")
         
-        if let titleAttributes = file.title?.properties {
+        if let titleAttributes = fileTemplate.driveFilesContainer?.table?.title?.properties{
             setTextProperties(label: cell.titleLabel, properties: titleAttributes)
         }
         
-        if let imgProperties = file.image?.properties {
+        if let imgProperties = fileTemplate.driveFilesContainer?.table?.image?.properties{
             setImageProperties(image: cell.fileImage, properties: imgProperties)
         }
         
-        if let storageAttributes = file.size?.properties {
+        if let storageAttributes = fileTemplate.driveFilesContainer?.table?.subtitle?.properties{
             setTextProperties(label: cell.storageLabel, properties: storageAttributes)
         }
-
+        cell.menu.addTarget(self, action: #selector(menuButtonClicked), for:.touchUpInside)
+        cell.menu.tag = indexPath.row
         return cell
     }
     
@@ -435,216 +474,5 @@ extension FileListView: UITableViewDelegate, UITableViewDataSource {
 }
 
 
-extension FileListView {
-    func getTemplate()->FilesTemplate {
-        var template = FilesTemplate(name: "drive",order: 1)
-        if  selectedFile == nil {
-            template.driveHeader = getFilesHeader()
-            template.driveStorage = getFilesStorage()
-            template.driveSearch = getFilesSearch()
-        }
-        
-        template.driveFoldersContainer = getNewDriveFolders()
-        template.driveFilesContainer = getDriveFiles()
-        template.properties = [
-        
-        ]
-        return template
-        
-    }
-    func getFilesHeader()->FilesHeader{
-        var driveHeader = FilesHeader(order:1)
-        driveHeader.title = TextProperties()
-        driveHeader.title?.tag = 10
-        driveHeader.title?.text = "FileManager Drive"
-        driveHeader.title?.properties = [
-            Properties(attr: Attributes.textColor.rawValue, value: "#FFFFFFFF"),
-            Properties(attr: Attributes.fontWeight.rawValue, value: "700.0"),
-            Properties(attr: Attributes.fontSize.rawValue, value: "24.0"),
-           
-            
-            Properties(attr: Attributes.fontFamily.rawValue, value: "Metropolis-Regular")
-        ]
-        
-        driveHeader.subtitle = TextProperties()
-        driveHeader.subtitle?.tag = 11
-        driveHeader.subtitle?.text = "Documents in the FileManager Drive are Not treated as authentic"
-        driveHeader.subtitle?.properties = [
-            Properties(attr: Attributes.textColor.rawValue, value: "#FFFFFFFF"),
-            Properties(attr: Attributes.fontSize.rawValue, value: "14.0"),
-            Properties(attr: Attributes.fontFamily.rawValue, value: "OpenSans-Regular"),
-                
-            ]
-        
-        driveHeader.image = ImagePropterties()
-        driveHeader.image?.resource = "file-header"
-        driveHeader.image?.tag = 12
-        driveHeader.image?.properties = [
-        Properties(attr: Attributes.contentMode.rawValue, value: "aspectFit"),
-           
-        ]
-        driveHeader.properties = [
-            Properties(attr: Attributes.margin.rawValue, value: "24,44,0,0")
-        ]
-        
-
-        return driveHeader
-    }
-    
-    func getFilesStorage()->FilesStorage{
-        var driveStorage = FilesStorage(order:2)
-        driveStorage.title = TextProperties()
-        driveStorage.subtitle = TextProperties()
-        driveStorage.progress = BarProperties()
-        
-        driveStorage.progress?.text = "40"
-        driveStorage.progress?.tag = 22
-        
-        driveStorage.title?.text = "982 MB"
-        driveStorage.title?.tag = 20
-        driveStorage.subtitle?.text = "Free of 1GB"
-        driveStorage.subtitle?.tag = 21
-        driveStorage.title?.properties = [
-            Properties(attr: Attributes.textColor.rawValue, value: "#FFfFFFFF"),
-            
-            Properties(attr: Attributes.fontSize.rawValue, value: "16.0"),
-            
-            Properties(attr: Attributes.topPadding.rawValue, value: "15.0"),
-            Properties(attr: Attributes.fontFamily.rawValue, value: "OpenSans-Bold"),
-        ]
-        
-        driveStorage.subtitle?.properties = [
-            Properties(attr: Attributes.textColor.rawValue, value: "#FFFFFFCC"),
-            Properties(attr: Attributes.fontSize.rawValue, value: "15.0"),
-            
-            Properties(attr: Attributes.topPadding.rawValue, value: "15.0"),
-            Properties(attr: Attributes.fontFamily.rawValue, value: "OpenSans-SemiBold"),
-           
-        ]
-        
-        driveStorage.progress?.properties = [
-            Properties(attr: Attributes.backgroundColor.rawValue, value: "#000000FF"),
-            //Properties(attr: Attributes.width.rawValue, value: "295"),
-            Properties(attr: Attributes.height.rawValue, value: "4")
-            
-            
-        ]
-        
-        driveStorage.properties = [
-            Properties(attr: Attributes.margin.rawValue, value: "24,0,0,10")
-        ]
-        
-        
-        
-        return driveStorage
-    }
-
-    func getFilesSearch()->FilesSearch{
-        var driveSearch = FilesSearch(order:3, searchHeight:60.0,containerWidth:self.view.frame.width+12)
-        driveSearch.icon = ImagePropterties()
-        driveSearch.title = TextProperties()
-        driveSearch.tag = 30
-        driveSearch.title?.text = "search for documents"
-        
-        driveSearch.title?.properties = [
-            Properties(attr: Attributes.textColor.rawValue, value: "#FFFFFFCC"),
-            Properties(attr: Attributes.fontSize.rawValue, value: "16.0"),
-            Properties(attr: Attributes.fontFamily.rawValue, value: "OpenSans-Bold"),
-           
-        ]
-        driveSearch.icon?.resource = "user"
-        
-        driveSearch.properties = [
-           Properties(attr: Attributes.leftRightMargin.rawValue, value: "24"),
-            Properties(attr: Attributes.backgroundColor.rawValue, value: "#FFFFFFFF"),
-        ]
-        return driveSearch
-    }
-    
-    
-    func getNewDriveFolders()->FoldersContainer{
-        var driveFoldersContainer = FoldersContainer(order: 4)
-        driveFoldersContainer.title = TextProperties()
-        driveFoldersContainer.title?.tag = 40
-        driveFoldersContainer.horizontalBar = ScrollBarProperties(tag:41)
-        driveFoldersContainer.title?.text = "Folders"
-        driveFoldersContainer.title?.properties = [
-            Properties(attr: Attributes.textColor.rawValue, value: "#000000FF"),
-            
-            Properties(attr: Attributes.fontSize.rawValue, value: "16.0"),
-            Properties(attr: Attributes.fontFamily.rawValue, value: "OpenSans-Bold"),
-            Properties(attr: Attributes.topPadding.rawValue, value: "15.0"),
-            Properties(attr: Attributes.bottomPadding.rawValue, value: "5.0")
-        ]
-       
-        driveFoldersContainer.horizontalBar?.itemProperties = [
-            Properties(attr: Attributes.width.rawValue, value: "104"),
-            Properties(attr: Attributes.height.rawValue, value: "104")
-        ]
-        
-        driveFoldersContainer.horizontalBar?.image = ImagePropterties()
-        driveFoldersContainer.horizontalBar?.image?.properties = [
-            Properties(attr: Attributes.backgroundColor.rawValue, value: "#OOOOOOFF"),
-            Properties(attr: Attributes.width.rawValue, value: "40.0"),
-            
-        ]
-        
-        driveFoldersContainer.horizontalBar?.title = TextProperties()
-        driveFoldersContainer.horizontalBar?.title?.properties = [
-            Properties(attr: Attributes.height.rawValue, value: "20"),
-            Properties(attr: Attributes.fontSize.rawValue, value: "12"),
-            Properties(attr: Attributes.fontFamily.rawValue, value: "OpenSans-SemiBold"),
-            Properties(attr: Attributes.textAlignment.rawValue, value: "center"),
-            Properties(attr: Attributes.topPadding.rawValue, value:"8")
-        ]
-        
-        driveFoldersContainer.horizontalBar?.properties  = [
-            Properties(attr: Attributes.width.rawValue, value: "104"),
-            Properties(attr: Attributes.height.rawValue, value: "104")
-        ]
-        
-        
-        
-        driveFoldersContainer.properties = [
-           
-            Properties(attr: Attributes.backgroundColor.rawValue, value: "#FFFFFFFF"),
-            Properties(attr: Attributes.leftMargin.rawValue, value: "24"),
-           
-        ]
-        return driveFoldersContainer
-    }
-    
-    
-    func getDriveFiles()->FilesContainer{
-        var filesContainer = FilesContainer(order: 4)
-        filesContainer.tag = 50
-        filesContainer.title = TextProperties()
-        filesContainer.title?.tag = 51
-        filesContainer.fileTitle = TextProperties()
-        filesContainer.fileTitle?.tag = 52
-        filesContainer.fileSubtitle = TextProperties()
-        filesContainer.fileSubtitle?.tag = 53
-        filesContainer.fileImage = ImagePropterties()
-        filesContainer.fileImage?.tag = 54
-        
-        filesContainer.title?.text = "Files"
-        filesContainer.title?.properties = [
-            Properties(attr: Attributes.textColor.rawValue, value: "#000000FF"),
-            
-            Properties(attr: Attributes.fontSize.rawValue, value: "16.0"),
-            Properties(attr: Attributes.fontFamily.rawValue, value: "OpenSans-Bold"),
-            Properties(attr: Attributes.topPadding.rawValue, value: "15.0"),
-            Properties(attr: Attributes.bottomPadding.rawValue, value: "5.0")
-         
-        ]
-       
-        
-        filesContainer.properties = [
-            Properties(attr: Attributes.backgroundColor.rawValue, value: "#FFFFFFFF"),
-            Properties(attr: Attributes.leftMargin.rawValue, value:"24")
-        ]
-        return filesContainer
-    }
-}
 
 

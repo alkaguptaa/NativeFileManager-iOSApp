@@ -42,6 +42,7 @@
 		F7A56980270D76A100B1ED3B /* FoldersContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A5697F270D76A100B1ED3B /* FoldersContainer.swift */; };
 		F7D163F12715431F008F3507 /* FolderTapGuesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D163F02715431F008F3507 /* FolderTapGuesture.swift */; };
 		F7D1645F2715645A008F3507 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F7D1645E2715645A008F3507 /* README.md */; };
+		F7D16467271596C3008F3507 /* FileListTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D16466271596C3008F3507 /* FileListTemplate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,6 +107,7 @@
 		F7C3F0AD270F5BCC00184926 /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Bold.ttf"; sourceTree = "<group>"; };
 		F7D163F02715431F008F3507 /* FolderTapGuesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderTapGuesture.swift; sourceTree = "<group>"; };
 		F7D1645E2715645A008F3507 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		F7D16466271596C3008F3507 /* FileListTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileListTemplate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -277,6 +279,7 @@
 				F767E3562710038600010678 /* ViewComponent */,
 				F767E371271006C800010678 /* FileListView.swift */,
 				F71783AD27132ACF001A8728 /* FileTableViewCell.swift */,
+				F7D16466271596C3008F3507 /* FileListTemplate.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -489,6 +492,7 @@
 				F7D163F12715431F008F3507 /* FolderTapGuesture.swift in Sources */,
 				F7A5695E270D743400B1ED3B /* ViewExtension.swift in Sources */,
 				F7A5696C270D75E000B1ED3B /* Properties.swift in Sources */,
+				F7D16467271596C3008F3507 /* FileListTemplate.swift in Sources */,
 				F715C736270C6BD300144EBE /* DashboardTabBarController.swift in Sources */,
 				F715C6C4270C6BA700144EBE /* AppDelegate.swift in Sources */,
 				F71783AE27132ACF001A8728 /* FileTableViewCell.swift in Sources */,

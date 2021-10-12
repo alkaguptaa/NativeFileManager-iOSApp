@@ -10,35 +10,26 @@ import UIKit
 struct FilesContainer:ViewProtocol,Codable{
     var tag: Int?
     
-   
-    
+    var table:TableViewProperties?
     var title:TextProperties?
-    var fileTitle:TextProperties?
-    var fileSubtitle:TextProperties?
-    var fileImage:ImagePropterties?
     var viewAll:TextProperties?
-    var scroll:[File]?
     var order:Int?
     var properties:[Properties]?
-    init(title:TextProperties? = nil, viewAll:TextProperties? = nil,fileTitle:TextProperties? = nil,fileSubtitle:TextProperties? = nil,fileImage:ImagePropterties? = nil, scroll:[File]? = nil, order:Int, properties:[Properties]?=nil){
+    init(tag:Int? = nil, table:TableViewProperties? = nil,title:TextProperties? = nil,viewAll:TextProperties? = nil,order:Int, properties:[Properties]?=nil){
         self.title = title
         self.viewAll = viewAll
-        self.scroll = scroll
         self.order = order
         self.properties = properties
-        self.fileTitle = fileTitle
-        self.fileSubtitle = fileSubtitle
-        self.fileImage = fileImage
+        self.title = title
+       
     }
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy:CodingKeys.self)
         title = try values.decodeIfPresent(TextProperties.self, forKey: .title)
         viewAll = try values.decodeIfPresent(TextProperties.self, forKey: .viewAll)
-        fileTitle = try values.decodeIfPresent(TextProperties.self, forKey: .fileTitle)
-        fileSubtitle = try values.decodeIfPresent(TextProperties.self, forKey: .fileSubtitle)
-        fileImage = try values.decodeIfPresent(ImagePropterties.self, forKey: .fileImage)
-        scroll = try values.decodeIfPresent([File].self, forKey: .scroll)
+        
+        table = try values.decodeIfPresent(TableViewProperties.self, forKey: .table)
         order = try values.decodeIfPresent(Int.self, forKey: .order)
         properties = try values.decodeIfPresent([Properties].self, forKey: .properties)
         
@@ -51,33 +42,21 @@ struct FilesContainer:ViewProtocol,Codable{
         
         
         
-        if let val = title?.text {
+        if let titleProp = title {
             let titleLbl = getLabel()
-            titleLbl.text = val
+            titleLbl.text = titleProp.text ?? ""
             titleLbl.translatesAutoresizingMaskIntoConstraints = false
             t.addArrangedSubview(titleLbl)
-            if let attributes = title?.properties {
+            if let attributes = titleProp.properties {
                 setTextProperties(label: titleLbl, properties: attributes)
             }
             
         }
         
         let container = getVStack(spacing: 0, alignment:.fill,distribution: .fill)
-        container.tag = FileListView.TAG_TABLE_CONTAINER
+        container.tag = self.table?.tag ?? 0
         container.translatesAutoresizingMaskIntoConstraints = false
         
-        
-        
-//            let vScroll = getVStack(spacing: 5,alignment: .fill, distribution: .fill)
-//            vScroll.translatesAutoresizingMaskIntoConstraints = false
-//
-//            for ele in scrl {
-//                vScroll.addArrangedSubview(ele.getView())
-//
-//            }
-//            container.addArrangedSubview(vScroll)
-//
-//
         t.addArrangedSubview(container)
         
         if let attributes = self.properties {

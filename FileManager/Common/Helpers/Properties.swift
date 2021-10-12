@@ -12,12 +12,11 @@ struct TextProperties:Codable {
     var text:String?
     var tag:Int?
     var properties:[Properties]?
-    init(text: String? = nil,tag:Int? = nil,
-             properties: [Properties]? = nil) {
+    init(tag:Int? = nil,text:String?=nil) {
             
-            self.text = text
+            
             self.tag = tag
-            self.properties = properties
+        self.text = text
             
         }
     enum CodingKeys: String, CodingKey {
@@ -43,14 +42,9 @@ struct ScrollBarProperties:Codable {
     var title:TextProperties?
     var tag:Int?
     var properties:[Properties]?
-    init(itemProperties:[Properties]?=nil,title:TextProperties?=nil,image:ImagePropterties?=nil, tag:Int? = nil,
-        properties: [Properties]? = nil) {
+    init( tag:Int? = nil) {
         self.tag = tag
-        
-        self.itemProperties = itemProperties
-        self.image = image
-        self.title = title
-        self.properties = properties
+       
             
         }
     enum CodingKeys: String, CodingKey {
@@ -78,16 +72,12 @@ struct TableViewProperties:Codable {
     var itemProperties:[Properties]?
     var image:ImagePropterties?
     var title:TextProperties?
+    var subtitle:TextProperties?
     var tag:Int?
     var properties:[Properties]?
-    init(itemProperties:[Properties]?=nil,title:TextProperties?=nil,image:ImagePropterties?=nil, tag:Int? = nil,
-        properties: [Properties]? = nil) {
+    init(tag:Int? = nil) {
         self.tag = tag
         
-        self.itemProperties = itemProperties
-        self.image = image
-        self.title = title
-        self.properties = properties
             
         }
     enum CodingKeys: String, CodingKey {
@@ -96,7 +86,7 @@ struct TableViewProperties:Codable {
         case itemProperties = "itemProperties"
         case image = "image"
         case title = "title"
-       
+        case subtitle = "subtitle"
     }
     
     init(from decoder: Decoder) throws {
@@ -106,12 +96,13 @@ struct TableViewProperties:Codable {
         itemProperties = try values.decodeIfPresent([Properties].self, forKey:.itemProperties)
         image = try values.decodeIfPresent(ImagePropterties.self, forKey:.image)
         title = try values.decodeIfPresent(TextProperties.self, forKey:.title)
+        subtitle = try values.decodeIfPresent(TextProperties.self, forKey:.subtitle)
         
     }
 }
 
 
-struct BarProperties:Codable {
+struct StackProperties:Codable {
     var text:String?
     var tag:Int?
     var properties:[Properties]?

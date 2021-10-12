@@ -12,7 +12,7 @@ struct FilesStorage:ViewProtocol,Codable {
     
     var title:TextProperties?
     var subtitle:TextProperties?
-    var progress:BarProperties?
+    var progress:StackProperties?
     var order:Int?
     var properties:[Properties]?
     
@@ -24,12 +24,10 @@ struct FilesStorage:ViewProtocol,Codable {
         case properties
     }
     
-    init(title:TextProperties? = nil, subtitle:TextProperties? = nil, progress:BarProperties? = nil, order:Int, properties:[Properties]? = nil){
-        self.title = title
-        self.subtitle = subtitle
-        self.progress = progress
+    init( tag:Int, order:Int){
         self.order = order
-        self.properties = properties
+        self.tag = tag
+       
     }
    
     
@@ -37,7 +35,7 @@ struct FilesStorage:ViewProtocol,Codable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         title = try values.decodeIfPresent(TextProperties.self, forKey: .title)
         subtitle = try values.decodeIfPresent(TextProperties.self, forKey: .subtitle)
-        progress = try values.decodeIfPresent(BarProperties.self, forKey: .progress)
+        progress = try values.decodeIfPresent(StackProperties.self, forKey: .progress)
         order = try values.decodeIfPresent(Int.self, forKey: .order)
         properties = try values.decodeIfPresent([Properties].self, forKey: .properties)
         
