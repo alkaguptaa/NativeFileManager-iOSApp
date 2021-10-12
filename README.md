@@ -34,7 +34,6 @@ I have started this from few days before and you can contribute and share your e
 2. Folder Detail Page
 
 
-## Design JSON 
 
 
 
