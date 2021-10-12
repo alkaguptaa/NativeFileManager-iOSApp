@@ -309,6 +309,10 @@ class FileListView: UIViewController, FileListPresenterToViewProtocol,ViewProtoc
         
         
     }
+    
+    @objc func menuButtonClicked(sender:UIButton){
+        print("row \(sender.tag) clicked")
+    }
     func setScrollingConstraints(templateView:UIView){
         
         NSLayoutConstraint.activate([
@@ -371,31 +375,31 @@ class FileListView: UIViewController, FileListPresenterToViewProtocol,ViewProtoc
         filesTableView.isScrollEnabled = false
         
         
-        if let scrollView = self.view.viewWithTag(FileListView.TAG_FOLDER_SCROLL) as? UIScrollView {
-            let hScroll = getHStack(spacing: 10,alignment: .fill, distribution: .fillEqually)
-            hScroll.translatesAutoresizingMaskIntoConstraints = false
-            var contentSize:CGFloat = 0.0
-            for (index,folder) in tFolders.enumerated() {
-                var folderElement = FolderElement(order: index)
-                folderElement.title = fileTemplate.driveFoldersContainer?.horizontalBar?.title
-                folderElement.image = fileTemplate.driveFoldersContainer?.horizontalBar?.image
-                folderElement.image?.resource = "folder"
-                folderElement.title?.text = folder.title?.text
-                
-                hScroll.addArrangedSubview(folderElement.getView())
-                
-                contentSize+=112.0
-            }
-            scrollView.addSubview(hScroll)
-            scrollView.contentSize = CGSize(width:contentSize,height: hScroll.frame.height)
-            
-            NSLayoutConstraint.activate([
-                hScroll.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
-                hScroll.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-                hScroll.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor),
-            ])
-            
-        }
+//        if let scrollView = self.view.viewWithTag(FileListView.TAG_FOLDER_SCROLL) as? UIScrollView {
+//            let hScroll = getHStack(spacing: 10,alignment: .fill, distribution: .fillEqually)
+//            hScroll.translatesAutoresizingMaskIntoConstraints = false
+//            var contentSize:CGFloat = 0.0
+//            for (index,folder) in tFolders.enumerated() {
+//                var folderElement = FolderElement(order: index)
+//                folderElement.title = fileTemplate.driveFoldersContainer?.horizontalBar?.title
+//                folderElement.image = fileTemplate.driveFoldersContainer?.horizontalBar?.image
+//                folderElement.image?.resource = "folder"
+//                folderElement.title?.text = folder.title?.text
+//                
+//                hScroll.addArrangedSubview(folderElement.getView())
+//                
+//                contentSize+=112.0
+//            }
+//            scrollView.addSubview(hScroll)
+//            scrollView.contentSize = CGSize(width:contentSize,height: hScroll.frame.height)
+//            
+//            NSLayoutConstraint.activate([
+//                hScroll.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
+//                hScroll.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+//                hScroll.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor),
+//            ])
+//            
+//        }
         
         
         
@@ -432,7 +436,8 @@ extension FileListView: UITableViewDelegate, UITableViewDataSource {
         if let storageAttributes = fileTemplate.driveFilesContainer?.table?.subtitle?.properties{
             setTextProperties(label: cell.storageLabel, properties: storageAttributes)
         }
-
+        cell.menu.addTarget(self, action: #selector(menuButtonClicked), for:.touchUpInside)
+        cell.menu.tag = indexPath.row
         return cell
     }
     
