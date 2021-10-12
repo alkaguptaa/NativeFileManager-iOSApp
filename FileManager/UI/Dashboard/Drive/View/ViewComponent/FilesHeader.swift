@@ -42,6 +42,7 @@ struct FilesHeader:ViewProtocol,Codable {
         if let titleProp = title {
             let titleLbl = getLabel()
             titleLbl.tag = titleProp.tag ?? 0
+            titleLbl.text = titleProp.text ?? ""
             titleLbl.numberOfLines = 0
             titleLbl.sizeToFit()
             
@@ -51,10 +52,11 @@ struct FilesHeader:ViewProtocol,Codable {
             }
         }
         
-        if let sub = subtitle {
+        if let subProp = subtitle {
             let subtitleLbl = getLabel()
             subtitleLbl.numberOfLines = 0
-            subtitleLbl.tag = sub.tag ?? 0
+            subtitleLbl.text = subProp.text ?? ""
+            subtitleLbl.tag = subProp.tag ?? 0
             subtitleLbl.sizeToFit()
            
             t.addArrangedSubview(subtitleLbl)

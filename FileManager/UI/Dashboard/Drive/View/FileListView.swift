@@ -119,11 +119,11 @@ class FileListView: UIViewController, FileListPresenterToViewProtocol,ViewProtoc
     func updateTemplateHeaderSection(template:FilesTemplate){
         
         if let tag = template.driveHeader?.title?.tag, let titleLbl = self.view.viewWithTag(tag) as? UILabel{
-            titleLbl.text = "Header"
+           // titleLbl.text = "Header"
         }
         
         if let tag = template.driveHeader?.subtitle?.tag, let titleLbl = self.view.viewWithTag(tag) as? UILabel{
-            titleLbl.text = "Sub Header"
+           // titleLbl.text = "Sub Header"
         }
         
         if let tag = template.driveHeader?.image?.tag, let imageView = self.view.viewWithTag(tag) as? UIImageView{
