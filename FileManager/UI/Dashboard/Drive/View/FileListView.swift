@@ -311,7 +311,34 @@ class FileListView: UIViewController, FileListPresenterToViewProtocol,ViewProtoc
     }
     
     @objc func menuButtonClicked(sender:UIButton){
-        print("row \(sender.tag) clicked")
+        let alert = UIAlertController(title: "Actions", message: "Please Select an Option", preferredStyle: .actionSheet)
+            
+            alert.addAction(UIAlertAction(title: "View", style: .default , handler:{ (UIAlertAction)in
+                print("User click View button")
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Download", style: .default , handler:{ (UIAlertAction)in
+                print("User click Download button")
+            }))
+
+            alert.addAction(UIAlertAction(title: "Rename", style: .default , handler:{ (UIAlertAction)in
+                print("User click Rename button")
+            }))
+                alert.addAction(UIAlertAction(title: "Delete", style: .default , handler:{ (UIAlertAction)in
+                    print("User click Delete button")
+                }))
+            
+            alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler:{ (UIAlertAction)in
+                print("User click Dismiss button")
+            }))
+
+            
+            //uncomment for iPad Support
+            //alert.popoverPresentationController?.sourceView = self.view
+
+            self.present(alert, animated: true, completion: {
+                print("completion block")
+            })
     }
     func setScrollingConstraints(templateView:UIView){
         
