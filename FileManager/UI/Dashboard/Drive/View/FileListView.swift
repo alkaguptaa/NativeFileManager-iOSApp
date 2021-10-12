@@ -51,6 +51,7 @@ class FileListView: UIViewController, FileListPresenterToViewProtocol,ViewProtoc
     var tableContainerView: UIView!
     var presenter: FileListViewToPresenterProtocol?
     var fileList = [File]()
+    var folderList = [File]()
     var templateView: UIView!
     
     lazy var fileTemplate:FilesTemplate = {
@@ -187,6 +188,9 @@ class FileListView: UIViewController, FileListPresenterToViewProtocol,ViewProtoc
     
     func updateTemplateFolderSection(template:FilesTemplate){
         if let tag = template.driveFoldersContainer?.horizontalBar?.tag, let folderStack = self.view.viewWithTag(tag) as? UIStackView{
+            for view in folderStack.arrangedSubviews {
+                folderStack.removeArrangedSubview(view)
+            }
             let s = UIScrollView()
             
             s.showsHorizontalScrollIndicator = false
@@ -198,10 +202,10 @@ class FileListView: UIViewController, FileListPresenterToViewProtocol,ViewProtoc
             hScroll.translatesAutoresizingMaskIntoConstraints = false
             var contentSize:CGFloat = 0.0
             
-            for n in 1...10 {
-                var folderElement = FolderElement(order: n)
+            for (index,file) in folderList.enumerated() {
+                var folderElement = FolderElement(order: index)
                 folderElement.title = template.driveFoldersContainer?.horizontalBar?.title
-                folderElement.title?.text = "Folder \(n)"
+                folderElement.title?.text = file.title?.text
                 
                 folderElement.image = template.driveFoldersContainer?.horizontalBar?.image
                 folderElement.image?.resource = "folder"
@@ -380,21 +384,22 @@ class FileListView: UIViewController, FileListPresenterToViewProtocol,ViewProtoc
         // look here
         // ****
         
-       
-        var tFolders:[File] = []
-        //tFiles = files.filter{ $0.isFolder == false }
-        tFolders = files.filter{ $0.isFolder == true }
         
-        let height = 72 * files.count
-        let myCGFloat = CGFloat(height)
-        fileList = files
+       
+        
+        fileList = files.filter { $0.isFolder == false}
+        folderList = files.filter { $0.isFolder == true}
+        
+        let height = 72 * fileList.count
+        let tableHeight = CGFloat(height)
+        
         filesTableView.reloadData()
         filesTableView.layoutIfNeeded()
-        
+        updateTemplateFolderSection(template:fileTemplate)
        /**
         filesTableView.heightAnchor.constraint(equalToConstant: filesTableView.contentSize.height).isActive = true
         **/
-        filesTableView.heightAnchor.constraint(equalToConstant: myCGFloat).isActive = true
+        filesTableView.heightAnchor.constraint(equalToConstant: tableHeight).isActive = true
         filesTableView.isScrollEnabled = false
         
         
@@ -437,6 +442,7 @@ extension FileListView: UITableViewDelegate, UITableViewDataSource {
         return 72.0
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         return fileList.count
     }
     
