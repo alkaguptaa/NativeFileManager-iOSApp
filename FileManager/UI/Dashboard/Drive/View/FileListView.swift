@@ -58,7 +58,7 @@ class FileListView: UIViewController, FileListPresenterToViewProtocol,ViewProtoc
         if  selectedFile == nil {
             template.driveHeader = FileListTemplate.getSubTemplateHeader()
             template.driveStorage = FileListTemplate.getSubTemplateStorage()
-            template.driveSearch = FileListTemplate.getSubTemplateSearch()
+            template.driveSearch = FileListTemplate.getSubTemplateSearch(frame:self.view.frame)
         }
         
         template.driveFoldersContainer = FileListTemplate.getSubTemplateFolders()
@@ -214,12 +214,8 @@ class FileListView: UIViewController, FileListPresenterToViewProtocol,ViewProtoc
                     hScroll.addArrangedSubview(stack)
                     contentSize+=112.0
                 }
-                
-                
-                
+           
             }
-            
-            
            
             s.addSubview(hScroll)
             s.contentSize = CGSize(width:contentSize,height: hScroll.frame.height)

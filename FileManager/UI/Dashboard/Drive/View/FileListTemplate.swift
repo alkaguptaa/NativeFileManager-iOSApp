@@ -96,10 +96,10 @@ class FileListTemplate: NSObject {
         return driveStorage
     }
 
-    static func getSubTemplateSearch()->FilesSearch{
+    static func getSubTemplateSearch(frame:CGRect)->FilesSearch{
         var driveSearch = FilesSearch(tag:30,order:3)
         driveSearch.searchHeight = 60.0
-        //driveSearch.containerWidth = self.view.frame.width+12
+        driveSearch.containerWidth = frame.width
         driveSearch.icon = ImagePropterties()
         driveSearch.title = TextProperties()
         driveSearch.tag = 31
