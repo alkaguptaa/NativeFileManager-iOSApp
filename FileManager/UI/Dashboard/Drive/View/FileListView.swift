@@ -11,6 +11,7 @@ class FileListView: UIViewController, FileListPresenterToViewProtocol,ViewProtoc
     var tag: Int?
     
     
+    
     var tableContentSize:CGSize?
     
     static let fileCellIdentifire:String = "fileCell"
@@ -52,6 +53,22 @@ class FileListView: UIViewController, FileListPresenterToViewProtocol,ViewProtoc
     var fileList = [File]()
     var templateView: UIView!
     
+    lazy var fileTemplate:FilesTemplate = {
+        var template = FilesTemplate(name: "drive",order: 1)
+        if  selectedFile == nil {
+            template.driveHeader = getFilesHeader()
+            template.driveStorage = getFilesStorage()
+            template.driveSearch = getFilesSearch()
+        }
+        
+        template.driveFoldersContainer = getDriveFolders()
+        template.driveFilesContainer = getDriveFiles()
+        template.properties = [
+        
+        ]
+        return template
+    }()
+    
     init(file:File?)
     {
         self.selectedFile = file
@@ -82,7 +99,7 @@ class FileListView: UIViewController, FileListPresenterToViewProtocol,ViewProtoc
     
     
     func setupView(){
-        let template = getTemplate()
+        let template = self.fileTemplate
         
         
         // Added View
@@ -107,7 +124,7 @@ class FileListView: UIViewController, FileListPresenterToViewProtocol,ViewProtoc
         }
         
         if let tag = template.driveHeader?.subtitle?.tag, let titleLbl = self.view.viewWithTag(tag) as? UILabel{
-            titleLbl.text = "Static Template and Dynamic Styling from Backend"
+            titleLbl.text = "   "
         }
         
         if let tag = template.driveHeader?.image?.tag, let imageView = self.view.viewWithTag(tag) as? UIImageView{
@@ -229,9 +246,9 @@ class FileListView: UIViewController, FileListPresenterToViewProtocol,ViewProtoc
         
         ///////////////////////END///////////////////
         
-        ///// INSERT FOLDERS IN SCROLL /////
+        ///// INSERT FILES IN TABLEVIEW /////
         
-        if let tableContainer = self.view.viewWithTag(FileListView.TAG_TABLE_CONTAINER) {
+        if let tableContainer = self.view.viewWithTag((template.driveFilesContainer?.table?.tag)!) as? UIStackView {
             tableContainerView = tableContainer
             self.filesTableView = UITableView(frame: CGRect.zero)
             
@@ -269,14 +286,14 @@ class FileListView: UIViewController, FileListPresenterToViewProtocol,ViewProtoc
         presenter?.loadFileList(file:selectedFile)
 
         
-        do{
-            let data = try  JSONEncoder().encode(template)
-            let jsonString = String(data:data, encoding: .utf8)
-            print(jsonString)
-            
-        }catch{
-            print("error")
-        }
+//            do{
+//                let data = try  JSONEncoder().encode(template)
+//                let jsonString = String(data:data, encoding: .utf8)
+//                print(jsonString)
+//
+//            }catch{
+//                print("error")
+//            }
     }
     
     
@@ -411,18 +428,19 @@ extension FileListView: UITableViewDelegate, UITableViewDataSource {
         let cell = filesTableView.dequeueReusableCell(withIdentifier: FileListView.fileCellIdentifire, for: indexPath) as! FileTableViewCell
         let file = fileList[indexPath.row]
         cell.titleLabel.text = file.title?.text
+        
         cell.storageLabel.text = file.size?.text
         cell.fileImage.image = UIImage(named: "folder")
         
-        if let titleAttributes = file.title?.properties {
+        if let titleAttributes = fileTemplate.driveFilesContainer?.table?.title?.properties{
             setTextProperties(label: cell.titleLabel, properties: titleAttributes)
         }
         
-        if let imgProperties = file.image?.properties {
+        if let imgProperties = fileTemplate.driveFilesContainer?.table?.image?.properties{
             setImageProperties(image: cell.fileImage, properties: imgProperties)
         }
         
-        if let storageAttributes = file.size?.properties {
+        if let storageAttributes = fileTemplate.driveFilesContainer?.table?.subtitle?.properties{
             setTextProperties(label: cell.storageLabel, properties: storageAttributes)
         }
 
@@ -436,22 +454,7 @@ extension FileListView: UITableViewDelegate, UITableViewDataSource {
 
 
 extension FileListView {
-    func getTemplate()->FilesTemplate {
-        var template = FilesTemplate(name: "drive",order: 1)
-        if  selectedFile == nil {
-            template.driveHeader = getFilesHeader()
-            template.driveStorage = getFilesStorage()
-            template.driveSearch = getFilesSearch()
-        }
-        
-        template.driveFoldersContainer = getNewDriveFolders()
-        template.driveFilesContainer = getDriveFiles()
-        template.properties = [
-        
-        ]
-        return template
-        
-    }
+    
     func getFilesHeader()->FilesHeader{
         var driveHeader = FilesHeader(order:1)
         driveHeader.title = TextProperties()
@@ -495,7 +498,7 @@ extension FileListView {
         var driveStorage = FilesStorage(order:2)
         driveStorage.title = TextProperties()
         driveStorage.subtitle = TextProperties()
-        driveStorage.progress = BarProperties()
+        driveStorage.progress = StackProperties()
         
         driveStorage.progress?.text = "40"
         driveStorage.progress?.tag = 22
@@ -562,7 +565,7 @@ extension FileListView {
     }
     
     
-    func getNewDriveFolders()->FoldersContainer{
+    func getDriveFolders()->FoldersContainer{
         var driveFoldersContainer = FoldersContainer(order: 4)
         driveFoldersContainer.title = TextProperties()
         driveFoldersContainer.title?.tag = 40
@@ -620,13 +623,6 @@ extension FileListView {
         filesContainer.tag = 50
         filesContainer.title = TextProperties()
         filesContainer.title?.tag = 51
-        filesContainer.fileTitle = TextProperties()
-        filesContainer.fileTitle?.tag = 52
-        filesContainer.fileSubtitle = TextProperties()
-        filesContainer.fileSubtitle?.tag = 53
-        filesContainer.fileImage = ImagePropterties()
-        filesContainer.fileImage?.tag = 54
-        
         filesContainer.title?.text = "Files"
         filesContainer.title?.properties = [
             Properties(attr: Attributes.textColor.rawValue, value: "#000000FF"),
@@ -637,6 +633,32 @@ extension FileListView {
             Properties(attr: Attributes.bottomPadding.rawValue, value: "5.0")
          
         ]
+        
+        filesContainer.viewAll = TextProperties()
+        filesContainer.viewAll?.tag = 52
+        filesContainer.viewAll?.properties = [
+            Properties(attr: Attributes.textColor.rawValue, value: "#000000FF"),
+            
+            Properties(attr: Attributes.fontSize.rawValue, value: "16.0"),
+            Properties(attr: Attributes.fontFamily.rawValue, value: "OpenSans-Bold"),
+            Properties(attr: Attributes.topPadding.rawValue, value: "15.0"),
+            Properties(attr: Attributes.bottomPadding.rawValue, value: "5.0")
+         
+        ]
+        
+        filesContainer.table = TableViewProperties()
+        filesContainer.table?.title = TextProperties()
+        filesContainer.table?.image  = ImagePropterties()
+        filesContainer.table?.subtitle = TextProperties()
+        
+        filesContainer.table?.tag = 53
+        
+        filesContainer.table?.title = TextProperties()
+        filesContainer.table?.subtitle = TextProperties()
+        filesContainer.table?.image = ImagePropterties()
+        
+        
+        
        
         
         filesContainer.properties = [
