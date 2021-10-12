@@ -212,7 +212,11 @@ class FileListTemplate: NSObject {
         filesContainer.table?.subtitle = TextProperties()
         filesContainer.table?.image = ImagePropterties()
         
-        
+        filesContainer.table?.image?.properties = [
+            Properties(attr: Attributes.width.rawValue, value: "16.8"),
+            Properties(attr: Attributes.width.rawValue, value: "19.2"),
+            Properties(attr: Attributes.contentMode.rawValue, value: "aspectFit")
+        ]
         
        
         
