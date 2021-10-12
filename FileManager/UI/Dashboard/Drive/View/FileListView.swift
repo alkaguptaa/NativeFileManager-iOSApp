@@ -269,14 +269,14 @@ class FileListView: UIViewController, FileListPresenterToViewProtocol,ViewProtoc
         presenter?.loadFileList(file:selectedFile)
 
         
-//        do{
-//            let data = try  JSONEncoder().encode(template)
-//            let jsonString = String(data:data, encoding: .utf8)
-//            print(jsonString)
-//            
-//        }catch{
-//            print("error")
-//        }
+        do{
+            let data = try  JSONEncoder().encode(template)
+            let jsonString = String(data:data, encoding: .utf8)
+            print(jsonString)
+            
+        }catch{
+            print("error")
+        }
     }
     
     
