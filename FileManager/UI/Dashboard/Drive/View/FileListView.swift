@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import SDWebImage
 class FileListView: UIViewController, FileListPresenterToViewProtocol,ViewProtocol {
     var tag: Int?
     
@@ -459,8 +459,10 @@ extension FileListView: UITableViewDelegate, UITableViewDataSource {
         cell.titleLabel.text = file.title?.text
         
         cell.storageLabel.text = file.size?.text
-        if let imageName = file.image?.resource {
-            cell.fileImage.image = UIImage(named: imageName)
+        if let url = file.image?.url {
+            cell.fileImage.sd_setImage(with: URL(string: url), placeholderImage: UIImage(named: (file.image?.resource!)!))
+        }else if let resource = file.image?.resource {
+            cell.fileImage.image = UIImage(named: resource)
         }
         
         if let titleAttributes = fileTemplate.driveFilesContainer?.table?.title?.properties{
