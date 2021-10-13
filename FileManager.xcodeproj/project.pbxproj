@@ -43,6 +43,9 @@
 		F7D163F12715431F008F3507 /* FolderTapGuesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D163F02715431F008F3507 /* FolderTapGuesture.swift */; };
 		F7D1645F2715645A008F3507 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F7D1645E2715645A008F3507 /* README.md */; };
 		F7D16467271596C3008F3507 /* FileListTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D16466271596C3008F3507 /* FileListTemplate.swift */; };
+		F7D1646E2715B516008F3507 /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F7C3F0AD270F5BCC00184926 /* OpenSans-Bold.ttf */; };
+		F7D164722715B51F008F3507 /* OpenSans-CondensedRegular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F7C3F0AB270F5BCC00184926 /* OpenSans-CondensedRegular.ttf */; };
+		F7D164762715B528008F3507 /* OpenSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F7C3F0AC270F5BCC00184926 /* OpenSans-SemiBold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -451,7 +454,10 @@
 			files = (
 				F76E2D4F270ED3F600F245A5 /* OpenSans-Regular.ttf in Resources */,
 				F715C6D0270C6BA800144EBE /* LaunchScreen.storyboard in Resources */,
+				F7D164762715B528008F3507 /* OpenSans-SemiBold.ttf in Resources */,
+				F7D1646E2715B516008F3507 /* OpenSans-Bold.ttf in Resources */,
 				F76E2D50270ED3F600F245A5 /* Metropolis-Regular.otf in Resources */,
+				F7D164722715B51F008F3507 /* OpenSans-CondensedRegular.ttf in Resources */,
 				F7D1645F2715645A008F3507 /* README.md in Resources */,
 				F715C6CD270C6BA800144EBE /* Assets.xcassets in Resources */,
 				F7A5691F270D1A1F00B1ED3B /* home.json in Resources */,

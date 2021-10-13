@@ -19,7 +19,7 @@ class FileListPresenter: FileListViewToPresenterProtocol {
     }
     
     func showFileDetail(file: File, fromView: UIViewController) {
-        if !file.isFolder! {
+        if file.type == FileType.Directory.rawValue {
             router?.pushToFolderDetail(file: file, fromView: fromView)
         }else{
             router?.pushToFileDetail(file: file, fromView: fromView)

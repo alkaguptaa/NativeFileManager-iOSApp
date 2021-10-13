@@ -85,7 +85,14 @@ class FileListView: UIViewController, FileListPresenterToViewProtocol,ViewProtoc
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .white  
+        self.view.backgroundColor = .white
+        for family in UIFont.familyNames {
+            print("**\(family)\n")
+            for name in UIFont.fontNames(forFamilyName: family){
+                print("*****\(name)\n")
+            }
+        }
+       
         scrollView = UIScrollView()
         
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -213,7 +220,7 @@ class FileListView: UIViewController, FileListPresenterToViewProtocol,ViewProtoc
                 if let stack = folderElement.getView() as? UIStackView {
                     stack.isUserInteractionEnabled = true
                     let folderTapGuesture:FolderTapGuesture = FolderTapGuesture(target: self, action:  #selector(folderTapped))
-                    folderTapGuesture.file = File(isFolder: true, order: 1)
+                    folderTapGuesture.file = file
                     stack.addGestureRecognizer(folderTapGuesture)
                     hScroll.addArrangedSubview(stack)
                     contentSize+=112.0
@@ -387,8 +394,8 @@ class FileListView: UIViewController, FileListPresenterToViewProtocol,ViewProtoc
         
        
         
-        fileList = files.filter { $0.isFolder == false}
-        folderList = files.filter { $0.isFolder == true}
+        fileList = files.filter { ($0.type == FileType.PDF.rawValue || $0.type == FileType.Image.rawValue)}
+        folderList = files.filter { $0.type == FileType.Directory.rawValue}
         
         let height = 72 * fileList.count
         let tableHeight = CGFloat(height)
@@ -452,7 +459,9 @@ extension FileListView: UITableViewDelegate, UITableViewDataSource {
         cell.titleLabel.text = file.title?.text
         
         cell.storageLabel.text = file.size?.text
-        cell.fileImage.image = UIImage(named: "folder")
+        if let imageName = file.image?.resource {
+            cell.fileImage.image = UIImage(named: imageName)
+        }
         
         if let titleAttributes = fileTemplate.driveFilesContainer?.table?.title?.properties{
             setTextProperties(label: cell.titleLabel, properties: titleAttributes)

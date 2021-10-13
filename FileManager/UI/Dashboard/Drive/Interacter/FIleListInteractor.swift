@@ -19,7 +19,7 @@ class FileListInteractor: FileListPresenterToInteractorProtocol {
         
         for n in 1...4 {
             var fileElement = File(order: n)
-            fileElement.isFolder = true
+            fileElement.type = FileType.Directory.rawValue
             fileElement.title = TextProperties()
             fileElement.size = TextProperties()
             fileElement.image = ImagePropterties()
@@ -35,20 +35,25 @@ class FileListInteractor: FileListPresenterToInteractorProtocol {
         
         for n in 4...10 {
             var fileElement = File(order: n)
-            fileElement.isFolder = false
+            
             fileElement.title = TextProperties()
             fileElement.size = TextProperties()
             fileElement.image = ImagePropterties()
-            fileElement.image?.resource = "file"
+            if n%2==0 {
+                fileElement.type = FileType.PDF.rawValue
+                fileElement.image?.resource = "file"
+            }else{
+                fileElement.type = FileType.Image.rawValue
+                fileElement.image?.resource = "file"
+            }
+            
             fileElement.title?.text = "Document \(n)"
             fileElement.size?.text = "192 MB"
-            
-           
             fileList.append(fileElement)
-            
-            
-            
+          
         }
+        
+        
         return fileList
     }
 }
