@@ -459,7 +459,9 @@ extension FileListView: UITableViewDelegate, UITableViewDataSource {
         cell.titleLabel.text = file.title?.text
         
         cell.storageLabel.text = file.size?.text
-        cell.fileImage.image = UIImage(named: "folder")
+        if let imageName = file.image?.resource {
+            cell.fileImage.image = UIImage(named: imageName)
+        }
         
         if let titleAttributes = fileTemplate.driveFilesContainer?.table?.title?.properties{
             setTextProperties(label: cell.titleLabel, properties: titleAttributes)

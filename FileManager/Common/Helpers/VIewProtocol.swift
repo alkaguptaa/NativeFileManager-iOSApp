@@ -68,6 +68,7 @@ extension ViewProtocol{
                 
                 
             case Attributes.fontFamily.rawValue:
+
                 if let font =  UIFont(name: property.value!, size: label.font.pointSize) {
                     label.font = font
                 }else{

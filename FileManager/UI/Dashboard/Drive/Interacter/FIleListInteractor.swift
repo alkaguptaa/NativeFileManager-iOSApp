@@ -35,6 +35,10 @@ class FileListInteractor: FileListPresenterToInteractorProtocol {
         
         for n in 4...10 {
             var fileElement = File(order: n)
+            
+            fileElement.title = TextProperties()
+            fileElement.size = TextProperties()
+            fileElement.image = ImagePropterties()
             if n%2==0 {
                 fileElement.type = FileType.PDF.rawValue
                 fileElement.image?.resource = "file"
@@ -42,10 +46,6 @@ class FileListInteractor: FileListPresenterToInteractorProtocol {
                 fileElement.type = FileType.Image.rawValue
                 fileElement.image?.resource = "file"
             }
-            
-            fileElement.title = TextProperties()
-            fileElement.size = TextProperties()
-            fileElement.image = ImagePropterties()
             
             fileElement.title?.text = "Document \(n)"
             fileElement.size?.text = "192 MB"

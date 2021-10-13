@@ -120,6 +120,8 @@ struct FileElement:ViewProtocol,Codable{
             if let attributes = image?.properties {
                 setImageProperties(image: imgView, properties: attributes)
             }
+            
+            
             NSLayoutConstraint.activate([
                 imgView.leadingAnchor.constraint(equalTo: hStack.leadingAnchor, constant: 5.0),
                 imgView.centerYAnchor.constraint(equalTo: hStack.centerYAnchor),
