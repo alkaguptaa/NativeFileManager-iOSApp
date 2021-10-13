@@ -294,17 +294,17 @@ class FileListView: UIViewController, FileListPresenterToViewProtocol,ViewProtoc
          ********************************
          *THIS IS TO PRINT THE DESIGN JSONN
          ********************************
-         do{
-             let data = try  JSONEncoder().encode(template)
-             let jsonString = String(data:data, encoding: .utf8)
-             print(jsonString)
-
-         }catch{
-             print("error")
-         }
+         
          
          **/
-        
+        do{
+            let data = try  JSONEncoder().encode(template)
+            let jsonString = String(data:data, encoding: .utf8)
+            print(jsonString)
+
+        }catch{
+            print("error")
+        }
 
     }
     
