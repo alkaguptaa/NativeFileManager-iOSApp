@@ -485,6 +485,7 @@ extension FileListView: FileListPresenterToViewProtocol {
                 }
                 
                 for i in 5...10 {
+
                     let file = FileObject()
                     file.name = "File \(i)"
                     file.ext = "PDF"
@@ -494,6 +495,7 @@ extension FileListView: FileListPresenterToViewProtocol {
                     }
 //                    let file = File(name:"Folder \(i)", ext: "PDF", size:"\(i) MB")
 //                    newList.append(file)
+
                 }
                 
                 let data = realm.objects(FileObject.self)
