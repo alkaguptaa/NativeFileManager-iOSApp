@@ -6,7 +6,8 @@ Good opportunity for you to learn and contribute in this project.
 Here you would learn
 1. how you can change the look and feel of the iOS interface from a small server side json containing styling of the each elements of this file manager.
 2. VIPER Design pattern which is widely accepted
-3. Many more to come .....
+4. Network Layer with Viper Design Pattern
+5. Many more to come .....
  
 I have started this from few days before and you can contribute and share your expertise in this project.
 
@@ -27,6 +28,8 @@ I have started this from few days before and you can contribute and share your e
 2. Embedded styling of the native elements using json
 3. Added Click handlers and navigate to the folder detail screen
 4. Option Menu added on click
+5. Network Layer Added 
+6. Default List Added
 
 ## Under Development
 1. File Detail Page
