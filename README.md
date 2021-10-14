@@ -5,8 +5,8 @@ Good opportunity for you to learn and contribute in this project.
 
 Here you would learn
 1. how you can change the look and feel of the iOS interface from a small server side json containing styling of the each elements of this file manager.
-1. VIPER Design pattern which is widely accepted
-1. Many more to come .....
+2. VIPER Design pattern which is widely accepted
+3. Many more to come .....
  
 I have started this from few days before and you can contribute and share your expertise in this project.
 
