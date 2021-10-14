@@ -26,10 +26,11 @@ I have started this from few days before and you can contribute and share your e
 1. File Manger Template
 2. Embedded styling of the native elements using json
 3. Added Click handlers and navigate to the folder detail screen
+4. Option Menu added on click
 
 ## Under Development
 1. File Detail Page
-2. Option Menu
+2. DropBox Api Integration - https://www.dropbox.com/developers/documentation/http/documentation
 
 ## ScreenShots
 1. File Manager
