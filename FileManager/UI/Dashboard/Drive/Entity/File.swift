@@ -60,12 +60,12 @@ class File{
 extension File:Codable{
     enum CodingKeys: String, CodingKey {
 
-        case name = "Name"
-        case ext = "Ext"
-        case Key_name = "Key"
+        case name = "name"
+        case ext = "ext"
+        case Key_name = "Key_name"
         case human_size = "human_size"
-        case size = "Size"
-        case lastModified = "LastModified"
+        case size = "size"
+        case lastModified = "lastModified"
         
         
     }

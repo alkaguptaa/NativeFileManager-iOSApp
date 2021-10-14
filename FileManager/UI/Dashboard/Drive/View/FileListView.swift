@@ -466,43 +466,9 @@ extension FileListView: FileListPresenterToViewProtocol {
     func onFetchResponseFailure(error: String?) {
         
         DispatchQueue.main.async{
-            let realm = try! Realm()
-            try! realm.write{
-                realm.delete(realm.objects(FileObject.self))
-            }
-            var newList:[FileObject] = []
+        
             let alert = UIAlertController(title: "Actions", message: error, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Load Default List", style: .default , handler:{ (UIAlertAction)in
-                for i in 1...4 {
-                    let file = FileObject()
-                    file.name = "Folder \(i)"
-                    file.ext = "Collection"
-                    try! realm.write{
-                        realm.add(file)
-                    }
-    //                    let file = File(name:"Folder \(i)", ext: "Collection")
-    //                    newList.append(file)
-                }
-                
-                for i in 5...10 {
-
-                    let file = FileObject()
-                    file.name = "File \(i)"
-                    file.ext = "PDF"
-                    file.size = "\(i) MB"
-                    try! realm.write{
-                        realm.add(file)
-                    }
-//                    let file = File(name:"Folder \(i)", ext: "PDF", size:"\(i) MB")
-//                    newList.append(file)
-
-                }
-                
-                let data = realm.objects(FileObject.self)
-                self.showFileList(files:data)
-                
-                
-            }))
+            
             alert.addAction(UIAlertAction(title: "OK", style: .default , handler:{ (UIAlertAction)in
                 print("OK Clicked")
             }))
