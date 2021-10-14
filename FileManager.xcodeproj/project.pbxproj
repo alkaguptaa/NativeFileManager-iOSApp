@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -48,6 +48,18 @@
 		F7D1646E2715B516008F3507 /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F7C3F0AD270F5BCC00184926 /* OpenSans-Bold.ttf */; };
 		F7D164722715B51F008F3507 /* OpenSans-CondensedRegular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F7C3F0AB270F5BCC00184926 /* OpenSans-CondensedRegular.ttf */; };
 		F7D164762715B528008F3507 /* OpenSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F7C3F0AC270F5BCC00184926 /* OpenSans-SemiBold.ttf */; };
+		F7F101412717E6B600190FEB /* ParameterEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F101332717E6B600190FEB /* ParameterEncoding.swift */; };
+		F7F101422717E6B600190FEB /* URLParameterEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F101342717E6B600190FEB /* URLParameterEncoding.swift */; };
+		F7F101432717E6B600190FEB /* JSONParameterEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F101352717E6B600190FEB /* JSONParameterEncoder.swift */; };
+		F7F101442717E6B600190FEB /* NetworkROUTER.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F101372717E6B600190FEB /* NetworkROUTER.swift */; };
+		F7F101452717E6B600190FEB /* HTTPTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F101382717E6B600190FEB /* HTTPTask.swift */; };
+		F7F101462717E6B600190FEB /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F101392717E6B600190FEB /* HTTPMethod.swift */; };
+		F7F101472717E6B600190FEB /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F1013A2717E6B600190FEB /* Router.swift */; };
+		F7F101482717E6B600190FEB /* NetworkLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F1013B2717E6B600190FEB /* NetworkLogger.swift */; };
+		F7F101492717E6B600190FEB /* EndPointType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F1013C2717E6B600190FEB /* EndPointType.swift */; };
+		F7F1014A2717E6B600190FEB /* FileEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F1013E2717E6B600190FEB /* FileEndPoint.swift */; };
+		F7F1014B2717E6B600190FEB /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F101402717E6B600190FEB /* NetworkManager.swift */; };
+		F7F101512717E6D100190FEB /* FileApiResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F101502717E6D100190FEB /* FileApiResponse.swift */; };
 		F9A687A9119F784B6FF22A73 /* Pods_FileManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3D7DEEE5F840CE166719840 /* Pods_FileManager.framework */; };
 /* End PBXBuildFile section */
 
@@ -122,6 +134,18 @@
 		F7D163F02715431F008F3507 /* FolderTapGuesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderTapGuesture.swift; sourceTree = "<group>"; };
 		F7D1645E2715645A008F3507 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F7D16466271596C3008F3507 /* FileListTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileListTemplate.swift; sourceTree = "<group>"; };
+		F7F101332717E6B600190FEB /* ParameterEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParameterEncoding.swift; sourceTree = "<group>"; };
+		F7F101342717E6B600190FEB /* URLParameterEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLParameterEncoding.swift; sourceTree = "<group>"; };
+		F7F101352717E6B600190FEB /* JSONParameterEncoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONParameterEncoder.swift; sourceTree = "<group>"; };
+		F7F101372717E6B600190FEB /* NetworkROUTER.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkROUTER.swift; sourceTree = "<group>"; };
+		F7F101382717E6B600190FEB /* HTTPTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPTask.swift; sourceTree = "<group>"; };
+		F7F101392717E6B600190FEB /* HTTPMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
+		F7F1013A2717E6B600190FEB /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		F7F1013B2717E6B600190FEB /* NetworkLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkLogger.swift; sourceTree = "<group>"; };
+		F7F1013C2717E6B600190FEB /* EndPointType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndPointType.swift; sourceTree = "<group>"; };
+		F7F1013E2717E6B600190FEB /* FileEndPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileEndPoint.swift; sourceTree = "<group>"; };
+		F7F101402717E6B600190FEB /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		F7F101502717E6D100190FEB /* FileApiResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileApiResponse.swift; sourceTree = "<group>"; };
 		F84C1A607EA7DA9C65D2BA11 /* Pods-FileManager-FileManagerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FileManager-FileManagerUITests.release.xcconfig"; path = "Target Support Files/Pods-FileManager-FileManagerUITests/Pods-FileManager-FileManagerUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -173,7 +197,6 @@
 				A33ADAA604251707E22CDF14 /* Pods-FileManagerTests.debug.xcconfig */,
 				A9F64D512CA968AAC57D28CB /* Pods-FileManagerTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -265,6 +288,7 @@
 		F715C72C270C6BD300144EBE /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				F7F101312717E6A200190FEB /* Networking */,
 				F76E2D47270EB43B00F245A5 /* Fonts */,
 				F715C757270C6C8B00144EBE /* AppDelegate */,
 				F715C756270C6C8B00144EBE /* Helpers */,
@@ -388,6 +412,65 @@
 				F7D163F02715431F008F3507 /* FolderTapGuesture.swift */,
 			);
 			path = TapGuesture;
+			sourceTree = "<group>";
+		};
+		F7F101312717E6A200190FEB /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				F7F1014F2717E6D100190FEB /* Model */,
+				F7F101322717E6B600190FEB /* Encoding */,
+				F7F1013D2717E6B600190FEB /* EndPoint */,
+				F7F1013F2717E6B600190FEB /* Manager */,
+				F7F101362717E6B600190FEB /* Service */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		F7F101322717E6B600190FEB /* Encoding */ = {
+			isa = PBXGroup;
+			children = (
+				F7F101332717E6B600190FEB /* ParameterEncoding.swift */,
+				F7F101342717E6B600190FEB /* URLParameterEncoding.swift */,
+				F7F101352717E6B600190FEB /* JSONParameterEncoder.swift */,
+			);
+			path = Encoding;
+			sourceTree = "<group>";
+		};
+		F7F101362717E6B600190FEB /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				F7F101372717E6B600190FEB /* NetworkROUTER.swift */,
+				F7F101382717E6B600190FEB /* HTTPTask.swift */,
+				F7F101392717E6B600190FEB /* HTTPMethod.swift */,
+				F7F1013A2717E6B600190FEB /* Router.swift */,
+				F7F1013B2717E6B600190FEB /* NetworkLogger.swift */,
+				F7F1013C2717E6B600190FEB /* EndPointType.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		F7F1013D2717E6B600190FEB /* EndPoint */ = {
+			isa = PBXGroup;
+			children = (
+				F7F1013E2717E6B600190FEB /* FileEndPoint.swift */,
+			);
+			path = EndPoint;
+			sourceTree = "<group>";
+		};
+		F7F1013F2717E6B600190FEB /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				F7F101402717E6B600190FEB /* NetworkManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		F7F1014F2717E6D100190FEB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F7F101502717E6D100190FEB /* FileApiResponse.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -635,32 +718,44 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7F1014B2717E6B600190FEB /* NetworkManager.swift in Sources */,
+				F7F101482717E6B600190FEB /* NetworkLogger.swift in Sources */,
 				F768B6DF270F1E7F008A5901 /* FilesContainer.swift in Sources */,
 				F76E2D3D270EB2E900F245A5 /* FilesSearch.swift in Sources */,
+				F7F101422717E6B600190FEB /* URLParameterEncoding.swift in Sources */,
 				F7A56971270D762900B1ED3B /* VIewProtocol.swift in Sources */,
 				F767E35E2710046400010678 /* FileProtocol.swift in Sources */,
 				F7A56980270D76A100B1ED3B /* FoldersContainer.swift in Sources */,
+				F7F101512717E6D100190FEB /* FileApiResponse.swift in Sources */,
 				F767E368271005D700010678 /* FileListPresenter.swift in Sources */,
+				F7F101442717E6B600190FEB /* NetworkROUTER.swift in Sources */,
 				F715C6C8270C6BA700144EBE /* ViewController.swift in Sources */,
 				F715C733270C6BD300144EBE /* HomeViewModel.swift in Sources */,
+				F7F101472717E6B600190FEB /* Router.swift in Sources */,
 				F76E2D35270EB2D800F245A5 /* FilesStorage.swift in Sources */,
 				F7D163F12715431F008F3507 /* FolderTapGuesture.swift in Sources */,
 				F7A5695E270D743400B1ED3B /* ViewExtension.swift in Sources */,
 				F7A5696C270D75E000B1ED3B /* Properties.swift in Sources */,
+				F7F101462717E6B600190FEB /* HTTPMethod.swift in Sources */,
 				F7D16467271596C3008F3507 /* FileListTemplate.swift in Sources */,
 				F715C736270C6BD300144EBE /* DashboardTabBarController.swift in Sources */,
+				F7F101412717E6B600190FEB /* ParameterEncoding.swift in Sources */,
+				F7F101492717E6B600190FEB /* EndPointType.swift in Sources */,
 				F715C6C4270C6BA700144EBE /* AppDelegate.swift in Sources */,
 				F71783AE27132ACF001A8728 /* FileTableViewCell.swift in Sources */,
 				F767E36D2710064000010678 /* FileListRouter.swift in Sources */,
 				F7A56976270D765300B1ED3B /* FilesTemplate.swift in Sources */,
+				F7F101432717E6B600190FEB /* JSONParameterEncoder.swift in Sources */,
 				F76E2D28270EB1EA00F245A5 /* File.swift in Sources */,
 				F7A5697B270D767C00B1ED3B /* FilesHeader.swift in Sources */,
 				F715C734270C6BD300144EBE /* HomeViewController.swift in Sources */,
 				F7A56967270D75B000B1ED3B /* Attributes.swift in Sources */,
 				F76E2D49270EB4D300F245A5 /* Extension.swift in Sources */,
 				F767E3632710056000010678 /* FIleListInteractor.swift in Sources */,
+				F7F101452717E6B600190FEB /* HTTPTask.swift in Sources */,
 				F767E372271006C800010678 /* FileListView.swift in Sources */,
 				F715C735270C6BD300144EBE /* HomeModel.swift in Sources */,
+				F7F1014A2717E6B600190FEB /* FileEndPoint.swift in Sources */,
 				F768B6D4270F0864008A5901 /* PaddedLabel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
