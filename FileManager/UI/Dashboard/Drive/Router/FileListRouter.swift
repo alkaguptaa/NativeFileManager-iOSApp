@@ -21,20 +21,20 @@ class FileListRouter: FileListPresenterToRouterProtocol {
    
     
     
-    func pushToFileDetail(file: File, fromView: UIViewController) {
-        let list = FileListView(file:file)
-        
-        fromView.navigationController?.pushViewController(list, animated:true)
+    func pushToFileDetail(file: FileObject, fromView: UIViewController) {
+//        let list = FileListView(file:file)
+//
+//        fromView.navigationController?.pushViewController(list, animated:true)
 //        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
 //        let vc = storyboard.instantiateViewController(withIdentifier: "ColorDetailView") as! FileDetailView
 //       FileDetailRouter.createColorDetailModule(colorDetailRef: vc, colorDetail: color)
 //        fromView.navigationController?.pushViewController(vc, animated: true)
     }
     
-    func pushToFolderDetail(file: File, fromView: UIViewController) {
-        let list = FileListView(file:file)
-        
-        fromView.navigationController?.pushViewController(list, animated:true)
+    func pushToFolderDetail(file: FileObject, fromView: UIViewController) {
+//        let list = FileListView(file:file)
+//        
+//        fromView.navigationController?.pushViewController(list, animated:true)
 //        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
 //        let vc = storyboard.instantiateViewController(withIdentifier: "ColorDetailView") as! FileDetailView
 //       FileDetailRouter.createColorDetailModule(colorDetailRef: vc, colorDetail: color)

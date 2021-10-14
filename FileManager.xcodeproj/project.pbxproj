@@ -60,6 +60,7 @@
 		F7F1014A2717E6B600190FEB /* FileEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F1013E2717E6B600190FEB /* FileEndPoint.swift */; };
 		F7F1014B2717E6B600190FEB /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F101402717E6B600190FEB /* NetworkManager.swift */; };
 		F7F101512717E6D100190FEB /* FileApiResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F101502717E6D100190FEB /* FileApiResponse.swift */; };
+		F7F101912718516600190FEB /* FileObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F101902718516600190FEB /* FileObject.swift */; };
 		F9A687A9119F784B6FF22A73 /* Pods_FileManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3D7DEEE5F840CE166719840 /* Pods_FileManager.framework */; };
 /* End PBXBuildFile section */
 
@@ -146,6 +147,7 @@
 		F7F1013E2717E6B600190FEB /* FileEndPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileEndPoint.swift; sourceTree = "<group>"; };
 		F7F101402717E6B600190FEB /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		F7F101502717E6D100190FEB /* FileApiResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileApiResponse.swift; sourceTree = "<group>"; };
+		F7F101902718516600190FEB /* FileObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileObject.swift; sourceTree = "<group>"; };
 		F84C1A607EA7DA9C65D2BA11 /* Pods-FileManager-FileManagerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FileManager-FileManagerUITests.release.xcconfig"; path = "Target Support Files/Pods-FileManager-FileManagerUITests/Pods-FileManager-FileManagerUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -288,6 +290,7 @@
 		F715C72C270C6BD300144EBE /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				F7F1018C271850B300190FEB /* Database */,
 				F7F101312717E6A200190FEB /* Networking */,
 				F76E2D47270EB43B00F245A5 /* Fonts */,
 				F715C757270C6C8B00144EBE /* AppDelegate */,
@@ -473,6 +476,22 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		F7F1018C271850B300190FEB /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				F7F1018F2718510F00190FEB /* Model */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
+		F7F1018F2718510F00190FEB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F7F101902718516600190FEB /* FileObject.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -484,7 +503,6 @@
 				F715C6BC270C6BA700144EBE /* Sources */,
 				F715C6BD270C6BA700144EBE /* Frameworks */,
 				F715C6BE270C6BA700144EBE /* Resources */,
-				8E6E579DD2C640F94115C373 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -522,7 +540,6 @@
 				F715C6DD270C6BA800144EBE /* Sources */,
 				F715C6DE270C6BA800144EBE /* Frameworks */,
 				F715C6DF270C6BA800144EBE /* Resources */,
-				063012A719C7F57AFB2AC21B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -611,23 +628,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		063012A719C7F57AFB2AC21B /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FileManager-FileManagerUITests/Pods-FileManager-FileManagerUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FileManager-FileManagerUITests/Pods-FileManager-FileManagerUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FileManager-FileManagerUITests/Pods-FileManager-FileManagerUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		080D2ABD0E8DB28040B7A00B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -670,23 +670,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8E6E579DD2C640F94115C373 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FileManager/Pods-FileManager-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FileManager/Pods-FileManager-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FileManager/Pods-FileManager-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		BADA0AD3D2703262906A4767 /* [CP] Check Pods Manifest.lock */ = {
@@ -752,6 +735,7 @@
 				F7A56967270D75B000B1ED3B /* Attributes.swift in Sources */,
 				F76E2D49270EB4D300F245A5 /* Extension.swift in Sources */,
 				F767E3632710056000010678 /* FIleListInteractor.swift in Sources */,
+				F7F101912718516600190FEB /* FileObject.swift in Sources */,
 				F7F101452717E6B600190FEB /* HTTPTask.swift in Sources */,
 				F767E372271006C800010678 /* FileListView.swift in Sources */,
 				F715C735270C6BD300144EBE /* HomeModel.swift in Sources */,

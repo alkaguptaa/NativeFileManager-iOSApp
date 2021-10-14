@@ -8,5 +8,5 @@
 import UIKit
 
 class FolderTapGuesture: UITapGestureRecognizer {
-    var file:File? = nil
+    var file:FileObject? = nil
 }

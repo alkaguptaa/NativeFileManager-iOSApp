@@ -7,6 +7,9 @@
 
 import UIKit
 import SDWebImage
+import RealmSwift
+
+
 class FileListView: UIViewController,ViewProtocol {
     var tag: Int?
     
@@ -50,8 +53,8 @@ class FileListView: UIViewController,ViewProtocol {
     
     var tableContainerView: UIView!
     var presenter: FileListViewToPresenterProtocol?
-    var fileList = [File]()
-    var folderList = [File]()
+    var fileList:[FileObject] = []
+    var folderList:[FileObject] = []
     var templateView: UIView!
     
     lazy var fileTemplate:FilesTemplate = {
@@ -227,6 +230,7 @@ class FileListView: UIViewController,ViewProtocol {
                 }
            
             }
+            
            
             s.addSubview(hScroll)
             s.contentSize = CGSize(width:contentSize,height: hScroll.frame.height)
@@ -388,8 +392,16 @@ class FileListView: UIViewController,ViewProtocol {
     }
     
     
-    func showFileList(files:[File]){
+    func showFileList(files:Results<FileObject>){
         DispatchQueue.main.async{
+            
+            for file in files{
+                if(file.ext=="Collection"){
+                    self.folderList.append(file)
+                }else{
+                    self.fileList.append(file)
+                }
+            }
             
             self.fileList = files.filter { ($0.ext != "Collection")}
             self.folderList = files.filter { $0.ext == "Collection"}
@@ -444,7 +456,7 @@ extension FileListView: FileListPresenterToViewProtocol {
     
     
     
-    func onFetchResponseSuccess(files: [File]?) {
+    func onFetchResponseSuccess(files:Results<FileObject>?) {
         if let list = files {
             showFileList(files:list)
         }
@@ -454,21 +466,38 @@ extension FileListView: FileListPresenterToViewProtocol {
     func onFetchResponseFailure(error: String?) {
         
         DispatchQueue.main.async{
-            
-            var newList:[File] = []
+            let realm = try! Realm()
+            try! realm.write{
+                realm.delete(realm.objects(FileObject.self))
+            }
+            var newList:[FileObject] = []
             let alert = UIAlertController(title: "Actions", message: error, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Load Default List", style: .default , handler:{ (UIAlertAction)in
                 for i in 1...4 {
-                    let file = File(name:"Folder \(i)", ext: "Collection")
-                    newList.append(file)
+                    let file = FileObject()
+                    file.name = "Folder \(i)"
+                    file.ext = "Collection"
+                    try! realm.write{
+                        realm.add(file)
+                    }
+    //                    let file = File(name:"Folder \(i)", ext: "Collection")
+    //                    newList.append(file)
                 }
                 
                 for i in 5...10 {
-                    let file = File(name:"Folder \(i)", ext: "PDF")
-                    newList.append(file)
+                    let file = FileObject()
+                    file.name = "File \(i)"
+                    file.ext = "PDF"
+                    file.size = "\(i) MB"
+                    try! realm.write{
+                        realm.add(file)
+                    }
+//                    let file = File(name:"Folder \(i)", ext: "PDF", size:"\(i) MB")
+//                    newList.append(file)
                 }
                 
-                self.showFileList(files:newList)
+                let data = realm.objects(FileObject.self)
+                self.showFileList(files:data)
                 
                 
             }))
@@ -499,8 +528,8 @@ extension FileListView: UITableViewDelegate, UITableViewDataSource {
         cell.titleLabel.text = file.name
         
         cell.storageLabel.text = file.size
-        if let imgData = file.thumbnailImage {
-            cell.fileImage.image = UIImage(data:imgData)
+        if file.thumbnailImage != nil {
+            cell.fileImage.image = UIImage(data:file.thumbnailImage)
         }else{
             cell.fileImage.image = UIImage(named: "file")
         }
@@ -522,7 +551,7 @@ extension FileListView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        presenter?.showFileDetail(file: fileList[indexPath.row], fromView: self)
+       // presenter?.showFileDetail(file: fileList[indexPath.row], fromView: self)
     }
 }
 

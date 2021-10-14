@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import RealmSwift
 
 class FileListPresenter: FileListViewToPresenterProtocol {
     var view: FileListPresenterToViewProtocol?
@@ -19,7 +19,7 @@ class FileListPresenter: FileListViewToPresenterProtocol {
     }
     
     
-    func showFileDetail(file: File, fromView: UIViewController) {
+    func showFileDetail(file: FileObject, fromView: UIViewController) {
         if file.isDirectory {
             router?.pushToFolderDetail(file: file, fromView: fromView)
         }else{
@@ -35,7 +35,7 @@ extension FileListPresenter: FileListInteractorToPresenterProtocol {
     }
     
     
-    func fetchFileListSuccess(files: [File]?){
+    func fetchFileListSuccess(files: Results<FileObject>?){
         view?.onFetchResponseSuccess(files: files)
     }
     

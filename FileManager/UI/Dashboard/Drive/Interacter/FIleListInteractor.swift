@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class FileListInteractor: FileListPresenterToInteractorProtocol {
     
@@ -14,11 +15,22 @@ class FileListInteractor: FileListPresenterToInteractorProtocol {
     func loadFiles(path:String?) {
         let networkManager = NetworkManager()
         networkManager.getFiles(path:"/") { response, error in
-            if let result = response {
-                self.presenter!.fetchFileListSuccess(files:result.data)
-            }else if let err = error{
-                self.presenter!.fetchFileListFailed(error:err)
+            
+            do{
+                let realm = try! Realm()
+                let data = realm.objects(FileObject.self)
+                
+                 if let result = response {
+                     self.presenter!.fetchFileListSuccess(files:data)
+                 }else if let err = error{
+                     self.presenter!.fetchFileListFailed(error:err)
+                 }
+            }catch{
+                print(error)
             }
+           
+             
+            
             
             
         }

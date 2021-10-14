@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 protocol FileListViewToPresenterProtocol: class {
     var view: FileListPresenterToViewProtocol? {get set}
@@ -14,11 +15,11 @@ protocol FileListViewToPresenterProtocol: class {
     
     func fetchFileList(path:String?)
     
-    func showFileDetail(file: File, fromView: UIViewController)
+    func showFileDetail(file: FileObject, fromView: UIViewController)
 }
 
 protocol FileListPresenterToViewProtocol: class {
-    func onFetchResponseSuccess(files:[File]?)
+    func onFetchResponseSuccess(files:Results<FileObject>?)
     func onFetchResponseFailure(error:String?)
 }
 
@@ -30,13 +31,13 @@ protocol FileListPresenterToInteractorProtocol: class {
 }
 
 protocol FileListInteractorToPresenterProtocol: class {
-    func fetchFileListSuccess(files: [File]?)
+    func fetchFileListSuccess(files:Results<FileObject>?)
     func fetchFileListFailed(error:String?)
     
 }
 
 protocol FileListPresenterToRouterProtocol: class {
     static func createFileListModule(fileListRef: FileListView)
-    func pushToFileDetail(file: File,fromView: UIViewController)
-    func pushToFolderDetail(file: File,fromView: UIViewController)
+    func pushToFileDetail(file: FileObject,fromView: UIViewController)
+    func pushToFolderDetail(file: FileObject,fromView: UIViewController)
 }
