@@ -30,6 +30,7 @@ I have started this from few days before and you can contribute and share your e
 4. Option Menu added on click
 5. Network Layer Added 
 6. Default List Added
+7. Realm Database added to show default list
 
 ## Under Development
 1. File Detail Page
