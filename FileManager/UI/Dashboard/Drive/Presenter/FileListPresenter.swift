@@ -14,12 +14,13 @@ class FileListPresenter: FileListViewToPresenterProtocol {
     var router: FileListPresenterToRouterProtocol?
     var presenter: FileListViewToPresenterProtocol?
     
-    func loadFileList(file:File?) {
-        interactor?.getFileList(file: file)
+    func fetchFileList(path:String?) {
+        interactor?.loadFiles(path: path)
     }
     
+    
     func showFileDetail(file: File, fromView: UIViewController) {
-        if file.type == FileType.Directory.rawValue {
+        if file.isDirectory {
             router?.pushToFolderDetail(file: file, fromView: fromView)
         }else{
             router?.pushToFileDetail(file: file, fromView: fromView)
@@ -29,7 +30,14 @@ class FileListPresenter: FileListViewToPresenterProtocol {
 }
 
 extension FileListPresenter: FileListInteractorToPresenterProtocol {
-    func fetchFileList(fileList: [File]) {
-        view?.showFiles(files: fileList)
+    func fetchFileListFailed(error: String?) {
+        view?.onFetchResponseFailure(error:error)
     }
+    
+    
+    func fetchFileListSuccess(files: [File]?){
+        view?.onFetchResponseSuccess(files: files)
+    }
+    
+   
 }

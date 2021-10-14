@@ -12,22 +12,27 @@ protocol FileListViewToPresenterProtocol: class {
     var interactor: FileListPresenterToInteractorProtocol? {get set}
     var router: FileListPresenterToRouterProtocol? {get set}
     
-    func loadFileList(file:File?)
+    func fetchFileList(path:String?)
+    
     func showFileDetail(file: File, fromView: UIViewController)
 }
 
 protocol FileListPresenterToViewProtocol: class {
-    func showFiles(files: [File])
+    func onFetchResponseSuccess(files:[File]?)
+    func onFetchResponseFailure(error:String?)
 }
 
 protocol FileListPresenterToInteractorProtocol: class {
     var presenter: FileListInteractorToPresenterProtocol? {get set}
     
-    func getFileList(file:File?)
+    func loadFiles(path:String?)
+   
 }
 
 protocol FileListInteractorToPresenterProtocol: class {
-    func fetchFileList(fileList: [File])
+    func fetchFileListSuccess(files: [File]?)
+    func fetchFileListFailed(error:String?)
+    
 }
 
 protocol FileListPresenterToRouterProtocol: class {

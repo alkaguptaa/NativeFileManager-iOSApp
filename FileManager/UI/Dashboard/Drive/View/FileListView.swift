@@ -7,7 +7,7 @@
 
 import UIKit
 import SDWebImage
-class FileListView: UIViewController, FileListPresenterToViewProtocol,ViewProtocol {
+class FileListView: UIViewController,ViewProtocol {
     var tag: Int?
     
     
@@ -212,7 +212,7 @@ class FileListView: UIViewController, FileListPresenterToViewProtocol,ViewProtoc
             for (index,file) in folderList.enumerated() {
                 var folderElement = FolderElement(order: index)
                 folderElement.title = template.driveFoldersContainer?.horizontalBar?.title
-                folderElement.title?.text = file.title?.text
+                folderElement.title?.text = file.name
                 
                 folderElement.image = template.driveFoldersContainer?.horizontalBar?.image
                 folderElement.image?.resource = "folder"
@@ -288,7 +288,7 @@ class FileListView: UIViewController, FileListPresenterToViewProtocol,ViewProtoc
         self.setScrollingConstraints(templateView: templateView)
         
         FileListRouter.createFileListModule(fileListRef: self)
-        presenter?.loadFileList(file:selectedFile)
+        presenter?.fetchFileList(path:"/")
         
         /**
          ********************************
@@ -388,59 +388,98 @@ class FileListView: UIViewController, FileListPresenterToViewProtocol,ViewProtoc
     }
     
     
-    func showFiles(files: [File]) {
-        // look here
-        // ****
-        
-        
-       
-        
-        fileList = files.filter { ($0.type == FileType.PDF.rawValue || $0.type == FileType.Image.rawValue)}
-        folderList = files.filter { $0.type == FileType.Directory.rawValue}
-        
-        let height = 72 * fileList.count
-        let tableHeight = CGFloat(height)
-        
-        filesTableView.reloadData()
-        filesTableView.layoutIfNeeded()
-        updateTemplateFolderSection(template:fileTemplate)
-       /**
-        filesTableView.heightAnchor.constraint(equalToConstant: filesTableView.contentSize.height).isActive = true
-        **/
-        filesTableView.heightAnchor.constraint(equalToConstant: tableHeight).isActive = true
-        filesTableView.isScrollEnabled = false
-        
-        
-//        if let scrollView = self.view.viewWithTag(FileListView.TAG_FOLDER_SCROLL) as? UIScrollView {
-//            let hScroll = getHStack(spacing: 10,alignment: .fill, distribution: .fillEqually)
-//            hScroll.translatesAutoresizingMaskIntoConstraints = false
-//            var contentSize:CGFloat = 0.0
-//            for (index,folder) in tFolders.enumerated() {
-//                var folderElement = FolderElement(order: index)
-//                folderElement.title = fileTemplate.driveFoldersContainer?.horizontalBar?.title
-//                folderElement.image = fileTemplate.driveFoldersContainer?.horizontalBar?.image
-//                folderElement.image?.resource = "folder"
-//                folderElement.title?.text = folder.title?.text
-//                
-//                hScroll.addArrangedSubview(folderElement.getView())
-//                
-//                contentSize+=112.0
-//            }
-//            scrollView.addSubview(hScroll)
-//            scrollView.contentSize = CGSize(width:contentSize,height: hScroll.frame.height)
-//            
-//            NSLayoutConstraint.activate([
-//                hScroll.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
-//                hScroll.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-//                hScroll.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor),
-//            ])
-//            
-//        }
-        
-        
-        
-       
+    func showFileList(files:[File]){
+        DispatchQueue.main.async{
+            
+            self.fileList = files.filter { ($0.ext != "Collection")}
+            self.folderList = files.filter { $0.ext == "Collection"}
+                
+            let height = 72 * self.fileList.count
+                let tableHeight = CGFloat(height)
+                
+            self.filesTableView.reloadData()
+            self.filesTableView.layoutIfNeeded()
+            self.updateTemplateFolderSection(template:self.fileTemplate)
+               /**
+                filesTableView.heightAnchor.constraint(equalToConstant: filesTableView.contentSize.height).isActive = true
+                **/
+            self.filesTableView.heightAnchor.constraint(equalToConstant: tableHeight).isActive = true
+            self.filesTableView.isScrollEnabled = false
+                
+                
+        //        if let scrollView = self.view.viewWithTag(FileListView.TAG_FOLDER_SCROLL) as? UIScrollView {
+        //            let hScroll = getHStack(spacing: 10,alignment: .fill, distribution: .fillEqually)
+        //            hScroll.translatesAutoresizingMaskIntoConstraints = false
+        //            var contentSize:CGFloat = 0.0
+        //            for (index,folder) in tFolders.enumerated() {
+        //                var folderElement = FolderElement(order: index)
+        //                folderElement.title = fileTemplate.driveFoldersContainer?.horizontalBar?.title
+        //                folderElement.image = fileTemplate.driveFoldersContainer?.horizontalBar?.image
+        //                folderElement.image?.resource = "folder"
+        //                folderElement.title?.text = folder.title?.text
+        //
+        //                hScroll.addArrangedSubview(folderElement.getView())
+        //
+        //                contentSize+=112.0
+        //            }
+        //            scrollView.addSubview(hScroll)
+        //            scrollView.contentSize = CGSize(width:contentSize,height: hScroll.frame.height)
+        //
+        //            NSLayoutConstraint.activate([
+        //                hScroll.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
+        //                hScroll.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+        //                hScroll.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor),
+        //            ])
+        //
+        //        }
+        }
     }
+    
+    
+}
+
+
+extension FileListView: FileListPresenterToViewProtocol {
+    
+    
+    
+    
+    func onFetchResponseSuccess(files: [File]?) {
+        if let list = files {
+            showFileList(files:list)
+        }
+      }
+        
+    
+    func onFetchResponseFailure(error: String?) {
+        
+        DispatchQueue.main.async{
+            
+            var newList:[File] = []
+            let alert = UIAlertController(title: "Actions", message: error, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Load Default List", style: .default , handler:{ (UIAlertAction)in
+                for i in 1...4 {
+                    let file = File(name:"Folder \(i)", ext: "Collection")
+                    newList.append(file)
+                }
+                
+                for i in 5...10 {
+                    let file = File(name:"Folder \(i)", ext: "PDF")
+                    newList.append(file)
+                }
+                
+                self.showFileList(files:newList)
+                
+                
+            }))
+            alert.addAction(UIAlertAction(title: "OK", style: .default , handler:{ (UIAlertAction)in
+                print("OK Clicked")
+            }))
+            self.present(alert, animated: true)
+        }
+        
+    }
+    
 }
 
 extension FileListView: UITableViewDelegate, UITableViewDataSource {
@@ -457,13 +496,13 @@ extension FileListView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = filesTableView.dequeueReusableCell(withIdentifier: FileListView.fileCellIdentifire, for: indexPath) as! FileTableViewCell
         let file = fileList[indexPath.row]
-        cell.titleLabel.text = file.title?.text
+        cell.titleLabel.text = file.name
         
-        cell.storageLabel.text = file.size?.text
-        if let url = file.image?.url {
-            cell.fileImage.sd_setImage(with: URL(string: url), placeholderImage: UIImage(named: (file.image?.resource!)!))
-        }else if let resource = file.image?.resource {
-            cell.fileImage.image = UIImage(named: resource)
+        cell.storageLabel.text = file.size
+        if let imgData = file.thumbnailImage {
+            cell.fileImage.image = UIImage(data:imgData)
+        }else{
+            cell.fileImage.image = UIImage(named: "file")
         }
         
         if let titleAttributes = fileTemplate.driveFilesContainer?.table?.title?.properties{
