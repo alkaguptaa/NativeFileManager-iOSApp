@@ -464,7 +464,7 @@ extension FileListView: FileListPresenterToViewProtocol {
                 }
                 
                 for i in 5...10 {
-                    let file = File(name:"Folder \(i)", ext: "PDF")
+                    let file = File(name:"Folder \(i)", ext: "PDF", size:"\(i) MB")
                     newList.append(file)
                 }
                 
