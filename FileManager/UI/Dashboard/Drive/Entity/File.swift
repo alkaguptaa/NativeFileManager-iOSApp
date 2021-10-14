@@ -22,6 +22,11 @@ class File{
     var isDirectory : Bool = false
     var thumbnailImage : Data? = nil
     
+    init(name:String? = nil,ext:String? = nil, size:String? = nil){
+        self.name = name
+        self.ext = ext
+        self.size = size
+    }
     required init(from decoder: Decoder) throws {
        
         let values = try decoder.container(keyedBy: CodingKeys.self)

@@ -387,6 +387,53 @@ class FileListView: UIViewController,ViewProtocol {
     }
     
     
+    func showFileList(files:[File]){
+        DispatchQueue.main.async{
+            
+            self.fileList = files.filter { ($0.ext != "Collection")}
+            self.folderList = files.filter { $0.ext == "Collection"}
+                
+            let height = 72 * self.fileList.count
+                let tableHeight = CGFloat(height)
+                
+            self.filesTableView.reloadData()
+            self.filesTableView.layoutIfNeeded()
+            self.updateTemplateFolderSection(template:self.fileTemplate)
+               /**
+                filesTableView.heightAnchor.constraint(equalToConstant: filesTableView.contentSize.height).isActive = true
+                **/
+            self.filesTableView.heightAnchor.constraint(equalToConstant: tableHeight).isActive = true
+            self.filesTableView.isScrollEnabled = false
+                
+                
+        //        if let scrollView = self.view.viewWithTag(FileListView.TAG_FOLDER_SCROLL) as? UIScrollView {
+        //            let hScroll = getHStack(spacing: 10,alignment: .fill, distribution: .fillEqually)
+        //            hScroll.translatesAutoresizingMaskIntoConstraints = false
+        //            var contentSize:CGFloat = 0.0
+        //            for (index,folder) in tFolders.enumerated() {
+        //                var folderElement = FolderElement(order: index)
+        //                folderElement.title = fileTemplate.driveFoldersContainer?.horizontalBar?.title
+        //                folderElement.image = fileTemplate.driveFoldersContainer?.horizontalBar?.image
+        //                folderElement.image?.resource = "folder"
+        //                folderElement.title?.text = folder.title?.text
+        //
+        //                hScroll.addArrangedSubview(folderElement.getView())
+        //
+        //                contentSize+=112.0
+        //            }
+        //            scrollView.addSubview(hScroll)
+        //            scrollView.contentSize = CGSize(width:contentSize,height: hScroll.frame.height)
+        //
+        //            NSLayoutConstraint.activate([
+        //                hScroll.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
+        //                hScroll.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+        //                hScroll.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor),
+        //            ])
+        //
+        //        }
+        }
+    }
+    
     
 }
 
@@ -397,63 +444,33 @@ extension FileListView: FileListPresenterToViewProtocol {
     
     
     func onFetchResponseSuccess(files: [File]?) {
-        // look here
-        // ****
-        
-        
         if let list = files {
-            fileList = list.filter { ($0.ext == FileType.PDF.rawValue || $0.ext == FileType.Image.rawValue)}
-            folderList = list.filter { $0.isDirectory}
-            
-            let height = 72 * fileList.count
-            let tableHeight = CGFloat(height)
-            
-            filesTableView.reloadData()
-            filesTableView.layoutIfNeeded()
-            updateTemplateFolderSection(template:fileTemplate)
-           /**
-            filesTableView.heightAnchor.constraint(equalToConstant: filesTableView.contentSize.height).isActive = true
-            **/
-            filesTableView.heightAnchor.constraint(equalToConstant: tableHeight).isActive = true
-            filesTableView.isScrollEnabled = false
-            
-            
-    //        if let scrollView = self.view.viewWithTag(FileListView.TAG_FOLDER_SCROLL) as? UIScrollView {
-    //            let hScroll = getHStack(spacing: 10,alignment: .fill, distribution: .fillEqually)
-    //            hScroll.translatesAutoresizingMaskIntoConstraints = false
-    //            var contentSize:CGFloat = 0.0
-    //            for (index,folder) in tFolders.enumerated() {
-    //                var folderElement = FolderElement(order: index)
-    //                folderElement.title = fileTemplate.driveFoldersContainer?.horizontalBar?.title
-    //                folderElement.image = fileTemplate.driveFoldersContainer?.horizontalBar?.image
-    //                folderElement.image?.resource = "folder"
-    //                folderElement.title?.text = folder.title?.text
-    //
-    //                hScroll.addArrangedSubview(folderElement.getView())
-    //
-    //                contentSize+=112.0
-    //            }
-    //            scrollView.addSubview(hScroll)
-    //            scrollView.contentSize = CGSize(width:contentSize,height: hScroll.frame.height)
-    //
-    //            NSLayoutConstraint.activate([
-    //                hScroll.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
-    //                hScroll.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-    //                hScroll.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor),
-    //            ])
-    //
-    //        }
+            showFileList(files:list)
         }
+      }
         
-        
-        
-        
-        
-    }
     
     func onFetchResponseFailure(error: String?) {
+        
         DispatchQueue.main.async{
+            
+            var newList:[File] = []
             let alert = UIAlertController(title: "Actions", message: error, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Load Default List", style: .default , handler:{ (UIAlertAction)in
+                for i in 1...4 {
+                    let file = File(name:"Folder \(i)", ext: "Collection")
+                    newList.append(file)
+                }
+                
+                for i in 5...10 {
+                    let file = File(name:"Folder \(i)", ext: "PDF")
+                    newList.append(file)
+                }
+                
+                self.showFileList(files:newList)
+                
+                
+            }))
             alert.addAction(UIAlertAction(title: "OK", style: .default , handler:{ (UIAlertAction)in
                 print("OK Clicked")
             }))
@@ -462,8 +479,8 @@ extension FileListView: FileListPresenterToViewProtocol {
         
     }
     
-    
 }
+
 extension FileListView: UITableViewDelegate, UITableViewDataSource {
     
     
