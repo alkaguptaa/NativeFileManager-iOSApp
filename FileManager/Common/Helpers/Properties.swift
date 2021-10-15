@@ -35,6 +35,34 @@ struct TextProperties:Codable {
     }
 }
 
+struct ButtonProperties:Codable {
+    var text:String?
+    var tag:Int?
+    var properties:[Properties]?
+    init(tag:Int? = nil,text:String?=nil) {
+            
+            
+            self.tag = tag
+        self.text = text
+            
+        }
+    enum CodingKeys: String, CodingKey {
+        case text = "name"
+        case properties = "properties"
+       case tag = "tag"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        text = try values.decodeIfPresent(String.self, forKey: .text)
+        tag = try values.decodeIfPresent(Int.self, forKey: .tag)
+        properties = try values.decodeIfPresent([Properties].self, forKey:.properties)
+        
+        
+    }
+}
+
+
 struct ScrollBarProperties:Codable {
     
     var itemProperties:[Properties]?

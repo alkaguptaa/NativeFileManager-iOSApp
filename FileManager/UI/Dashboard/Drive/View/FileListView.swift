@@ -67,7 +67,8 @@ class FileListView: UIViewController,ViewProtocol {
         
         template.driveFoldersContainer = FileListTemplate.getSubTemplateFolders()
         template.driveFilesContainer = FileListTemplate.getSubTemplateFiles()
-        template.properties = [
+        template.driveFooter = FileListTemplate.getSubTemplateFooter()
+       template.properties = [
         
         ]
         return template
@@ -110,7 +111,8 @@ class FileListView: UIViewController,ViewProtocol {
     
     func addTemplateView(template:FilesTemplate,templateView:UIView){
         
-       
+        let zView = ZView()
+        zView.translatesAutoresizingMaskIntoConstraints = false
         templateView.translatesAutoresizingMaskIntoConstraints = false
         scrollContentView.addSubview(templateView)
         scrollView.addSubview(scrollContentView)
@@ -120,11 +122,37 @@ class FileListView: UIViewController,ViewProtocol {
         templateView.translatesAutoresizingMaskIntoConstraints = false
         scrollContentView.addSubview(templateView)
         scrollView.addSubview(scrollContentView)
-        self.view.addSubview(scrollView)
+        zView.addZSubview(view: scrollView, position: .full)
+        self.view.addSubview(zView)
        
+        let buttonContainer = getHStack(spacing: 0, distribution: .fill)
+        let button = UIButton()
+        if let title = template.driveFooter?.button?.text {
+            button.setTitle(title, for: .normal)
+        }else{
+            button.setTitle("Add File", for: .normal)
+        }
+        
+        if let btnProperties = template.driveFooter?.button?.properties {
+            setButtonProperties(button: button, properties: btnProperties)
+        }
+        buttonContainer.addArrangedSubview(button)
+        buttonContainer.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 12)
+        buttonContainer.isLayoutMarginsRelativeArrangement = true
+        zView.addZSubview(view: buttonContainer, position: .bottomRight)
+        self.view.bringSubviewToFront(button)
         if let attributes = template.properties {
             setRelativeStackProperties(view: templateView, relativeView: scrollContentView, properties: attributes)
         }
+        
+        NSLayoutConstraint.activate([
+            
+            zView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+            zView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+
+            zView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
+            zView.bottomAnchor.constraint  (equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
+        ])
     }
     
     func updateTemplateHeaderSection(template:FilesTemplate){
@@ -143,6 +171,9 @@ class FileListView: UIViewController,ViewProtocol {
             }
         }
     }
+    
+    
+    
     
     func updateTemplateStorageSection(template:FilesTemplate){
         if let tag = template.driveStorage?.title?.tag, let titleLbl = self.view.viewWithTag(tag) as? UILabel{
@@ -281,6 +312,8 @@ class FileListView: UIViewController,ViewProtocol {
         }
     }
     func setupView(){
+        
+        
         let template = self.fileTemplate
         let templateView = template.getView()
         addTemplateView(template: template, templateView: templateView)
@@ -298,18 +331,18 @@ class FileListView: UIViewController,ViewProtocol {
          ********************************
          *THIS IS TO PRINT THE DESIGN JSONN
          ********************************
-         
+         do{
+             let data = try  JSONEncoder().encode(template)
+             let jsonString = String(data:data, encoding: .utf8)
+             print(jsonString)
+
+         }catch{
+             print("error")
+         }
          
          **/
         
-        do{
-            let data = try  JSONEncoder().encode(template)
-            let jsonString = String(data:data, encoding: .utf8)
-            print(jsonString)
-
-        }catch{
-            print("error")
-        }
+        
 
     }
     
@@ -406,7 +439,7 @@ class FileListView: UIViewController,ViewProtocol {
             self.fileList = files.filter { ($0.ext != "Collection")}
             self.folderList = files.filter { $0.ext == "Collection"}
                 
-            let height = 72 * self.fileList.count
+            let height = 72 * self.fileList.count + 72
                 let tableHeight = CGFloat(height)
                 
             self.filesTableView.reloadData()

@@ -48,6 +48,8 @@
 		F7D1646E2715B516008F3507 /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F7C3F0AD270F5BCC00184926 /* OpenSans-Bold.ttf */; };
 		F7D164722715B51F008F3507 /* OpenSans-CondensedRegular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F7C3F0AB270F5BCC00184926 /* OpenSans-CondensedRegular.ttf */; };
 		F7D164762715B528008F3507 /* OpenSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F7C3F0AC270F5BCC00184926 /* OpenSans-SemiBold.ttf */; };
+		F7D571B32719690F00A83169 /* FileFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D571B22719690F00A83169 /* FileFooter.swift */; };
+		F7D571B82719814800A83169 /* ZView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D571B72719814800A83169 /* ZView.swift */; };
 		F7F101412717E6B600190FEB /* ParameterEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F101332717E6B600190FEB /* ParameterEncoding.swift */; };
 		F7F101422717E6B600190FEB /* URLParameterEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F101342717E6B600190FEB /* URLParameterEncoding.swift */; };
 		F7F101432717E6B600190FEB /* JSONParameterEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F101352717E6B600190FEB /* JSONParameterEncoder.swift */; };
@@ -135,6 +137,8 @@
 		F7D163F02715431F008F3507 /* FolderTapGuesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderTapGuesture.swift; sourceTree = "<group>"; };
 		F7D1645E2715645A008F3507 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F7D16466271596C3008F3507 /* FileListTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileListTemplate.swift; sourceTree = "<group>"; };
+		F7D571B22719690F00A83169 /* FileFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileFooter.swift; sourceTree = "<group>"; };
+		F7D571B72719814800A83169 /* ZView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZView.swift; sourceTree = "<group>"; };
 		F7F101332717E6B600190FEB /* ParameterEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParameterEncoding.swift; sourceTree = "<group>"; };
 		F7F101342717E6B600190FEB /* URLParameterEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLParameterEncoding.swift; sourceTree = "<group>"; };
 		F7F101352717E6B600190FEB /* JSONParameterEncoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONParameterEncoder.swift; sourceTree = "<group>"; };
@@ -307,6 +311,7 @@
 				F7A56970270D762900B1ED3B /* VIewProtocol.swift */,
 				F76E2D48270EB4D300F245A5 /* Extension.swift */,
 				F768B6D3270F0864008A5901 /* PaddedLabel.swift */,
+				F7D571B72719814800A83169 /* ZView.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -380,6 +385,7 @@
 				F76E2D34270EB2D800F245A5 /* FilesStorage.swift */,
 				F76E2D3C270EB2E800F245A5 /* FilesSearch.swift */,
 				F768B6DE270F1E7F008A5901 /* FilesContainer.swift */,
+				F7D571B22719690F00A83169 /* FileFooter.swift */,
 			);
 			path = ViewComponent;
 			sourceTree = "<group>";
@@ -713,6 +719,7 @@
 				F767E368271005D700010678 /* FileListPresenter.swift in Sources */,
 				F7F101442717E6B600190FEB /* NetworkROUTER.swift in Sources */,
 				F715C6C8270C6BA700144EBE /* ViewController.swift in Sources */,
+				F7D571B32719690F00A83169 /* FileFooter.swift in Sources */,
 				F715C733270C6BD300144EBE /* HomeViewModel.swift in Sources */,
 				F7F101472717E6B600190FEB /* Router.swift in Sources */,
 				F76E2D35270EB2D800F245A5 /* FilesStorage.swift in Sources */,
@@ -725,6 +732,7 @@
 				F7F101412717E6B600190FEB /* ParameterEncoding.swift in Sources */,
 				F7F101492717E6B600190FEB /* EndPointType.swift in Sources */,
 				F715C6C4270C6BA700144EBE /* AppDelegate.swift in Sources */,
+				F7D571B82719814800A83169 /* ZView.swift in Sources */,
 				F71783AE27132ACF001A8728 /* FileTableViewCell.swift in Sources */,
 				F767E36D2710064000010678 /* FileListRouter.swift in Sources */,
 				F7A56976270D765300B1ED3B /* FilesTemplate.swift in Sources */,

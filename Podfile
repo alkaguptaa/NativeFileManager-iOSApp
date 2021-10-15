@@ -6,8 +6,10 @@ target 'FileManager' do
   use_frameworks!
 
   # Pods for FileManager
+
 	#pod 'SDWebImage'
   #pod 'RealmSwift'
+
   target 'FileManagerTests' do
     inherit! :search_paths
     # Pods for testing
