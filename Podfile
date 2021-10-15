@@ -7,6 +7,7 @@ target 'FileManager' do
 
   # Pods for FileManager
 	#pod 'SDWebImage'
+  #pod 'RealmSwift'
   target 'FileManagerTests' do
     inherit! :search_paths
     # Pods for testing
