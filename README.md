@@ -31,6 +31,7 @@ I have started this from few days before and you can contribute and share your e
 5. Network Layer Added 
 6. Default List Added
 7. Realm Database added to show default list
+8. Add File Button added
 
 ## Under Development
 1. File Detail Page
@@ -38,7 +39,8 @@ I have started this from few days before and you can contribute and share your e
 
 ## ScreenShots
 1. File Manager
-2. Folder Detail Page
+2. File Detail Page
+
 
 
 
