@@ -19,7 +19,7 @@ I have started this from few days before and you can contribute and share your e
 
 #### Fork the project 
 1. Fork Project using fork button at top right to become the part of great community of iOS App Developers
-`git clone https://github.com/[Your GIT Username]/App360.git`
+
 
 
 
