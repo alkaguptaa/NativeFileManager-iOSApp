@@ -21,6 +21,7 @@ struct FilesContainer:ViewProtocol,Codable{
         self.order = order
         self.properties = properties
         self.title = title
+        self.tag = tag
        
     }
     

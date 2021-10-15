@@ -48,6 +48,7 @@ class FileListTemplate: NSObject {
         return driveHeader
     }
     
+    
     static func getSubTemplateStorage()->FilesStorage{
         var driveStorage = FilesStorage(tag: 20, order: 2)
         driveStorage.title = TextProperties()
@@ -62,7 +63,7 @@ class FileListTemplate: NSObject {
         driveStorage.subtitle?.text = "Free of 1GB"
         driveStorage.subtitle?.tag = 22
         driveStorage.title?.properties = [
-            Properties(attr: Attributes.textColor.rawValue, value: "#FFfFFFFF"),
+            Properties(attr: Attributes.textColor.rawValue, value: "#FFFFFFFF"),
             
             Properties(attr: Attributes.fontSize.rawValue, value: "16.0"),
             
@@ -175,8 +176,8 @@ class FileListTemplate: NSObject {
     
     
     static func getSubTemplateFiles()->FilesContainer{
-        var filesContainer = FilesContainer(order: 4)
-        filesContainer.tag = 50
+        var filesContainer = FilesContainer(tag:50, order: 4)
+        
         filesContainer.title = TextProperties(tag: 51, text: "Files")
        
         filesContainer.title?.properties = [
@@ -225,5 +226,30 @@ class FileListTemplate: NSObject {
             Properties(attr: Attributes.leftMargin.rawValue, value:"24")
         ]
         return filesContainer
+    }
+    
+    static func getSubTemplateFooter()->FilesFooter{
+        var driveFooter = FilesFooter(tag:60,order:5)
+        driveFooter.button = ButtonProperties()
+        driveFooter.button?.tag = 61
+        driveFooter.button?.text = "Add File"
+        driveFooter.button?.properties = [
+            Properties(attr: Attributes.textColor.rawValue, value: "#000000FF"),
+            Properties(attr: Attributes.fontWeight.rawValue, value: "700.0"),
+            Properties(attr: Attributes.fontSize.rawValue, value: "16.0"),
+            Properties(attr: Attributes.backgroundColor.rawValue, value: "#502EE3FF"),
+            Properties(attr: Attributes.height.rawValue, value: "40"),
+            Properties(attr: Attributes.cornerRadius.rawValue, value: "20"),
+            Properties(attr: Attributes.width.rawValue, value: "80"),
+            Properties(attr: Attributes.fontFamily.rawValue, value: "OpenSans-Regular")
+        ]
+        
+        
+        driveFooter.properties = [
+            Properties(attr: Attributes.margin.rawValue, value: "24,44,0,0")
+        ]
+        
+
+        return driveFooter
     }
 }

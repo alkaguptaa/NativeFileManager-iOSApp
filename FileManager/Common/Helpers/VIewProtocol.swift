@@ -109,6 +109,39 @@ extension ViewProtocol{
         }
     }
     
+    func setButtonProperties(button:UIButton, properties:[Properties]){
+        for property in properties {
+            switch property.attr {
+            case Attributes.width.rawValue:
+                NSLayoutConstraint.activate([
+                    button.widthAnchor.constraint(equalToConstant:CGFloat((property.value! as NSString).floatValue))
+                ])
+            case Attributes.height.rawValue:
+                NSLayoutConstraint.activate([
+                    button.heightAnchor.constraint(equalToConstant:CGFloat((property.value! as NSString).floatValue))
+                ])
+            case Attributes.textColor.rawValue:
+                button.titleLabel?.textColor = UIColor(hex: property.value!)
+            case Attributes.backgroundColor.rawValue:
+                button.backgroundColor = UIColor(hex: property.value!)
+            case Attributes.fontSize.rawValue:
+            button.titleLabel?.font = UIFont.appRegularFontWith(size:CGFloat((property.value! as NSString).floatValue))
+            case Attributes.width.rawValue:
+                NSLayoutConstraint.activate([
+                    button.widthAnchor.constraint(equalToConstant:CGFloat((property.value! as NSString).floatValue))
+                ])
+            case Attributes.cornerRadius.rawValue:
+                button.layer.cornerRadius = CGFloat((property.value! as NSString).floatValue)
+                button.layer.masksToBounds = true
+                
+               
+            default:
+                print("NA")
+            }
+        }
+    }
+    
+    
     func setImageProperties(image:UIImageView, properties:[Properties]){
         for property in properties {
             switch property.attr {
@@ -265,6 +298,11 @@ extension ViewProtocol{
     func getLabel()->PaddedLabel  {
         return PaddedLabel()
     }
+    
+    func getButton()->PaddedLabel  {
+        return PaddedLabel()
+    }
+    
     
     func getImageView()->UIImageView{
         return UIImageView()

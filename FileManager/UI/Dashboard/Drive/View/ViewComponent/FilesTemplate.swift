@@ -16,16 +16,18 @@ struct FilesTemplate:ViewProtocol,Codable{
     var driveSearch:FilesSearch?
     var driveFoldersContainer:FoldersContainer?
     var driveFilesContainer:FilesContainer?
+    var driveFooter:FilesFooter?
     var order:Int?
     var tag: Int?
     var properties:[Properties]?
-    init(name:String, header:FilesHeader? = nil, storage:FilesStorage?=nil, search:FilesSearch?=nil,driveFoldersContainer:FoldersContainer? = nil, driveFilesContainer:FilesContainer? = nil, order:Int,tag:Int?=nil, properties:[Properties]? = nil)
+    init(name:String, header:FilesHeader? = nil, storage:FilesStorage?=nil, search:FilesSearch?=nil,driveFoldersContainer:FoldersContainer? = nil, driveFilesContainer:FilesContainer? = nil,  footer:FilesFooter? = nil,order:Int,tag:Int?=nil, properties:[Properties]? = nil)
     {
         self.name = name
         self.driveHeader = header
         self.driveStorage = storage
         self.driveFoldersContainer = driveFoldersContainer
         self.driveFilesContainer = driveFilesContainer
+        self.driveFooter = footer
         self.order = order
         self.tag = tag
         self.properties = properties
@@ -38,6 +40,7 @@ struct FilesTemplate:ViewProtocol,Codable{
         case driveSearch
         case driveFoldersContainer
         case driveFilesContainer
+        case driveFooter
         case order
         case tag
         case properties
@@ -51,7 +54,7 @@ struct FilesTemplate:ViewProtocol,Codable{
         driveSearch = try values.decodeIfPresent(FilesSearch.self, forKey: .driveSearch)
         driveFoldersContainer = try values.decodeIfPresent(FoldersContainer.self, forKey: .driveFoldersContainer)
         driveFilesContainer = try values.decodeIfPresent(FilesContainer.self, forKey: .driveFilesContainer)
-        
+        driveFooter = try values.decodeIfPresent(FilesFooter.self, forKey: .driveFooter)
         order = try values.decodeIfPresent(Int.self, forKey: .order)
         tag = try values.decodeIfPresent(Int.self, forKey: .tag)
         properties = try values.decodeIfPresent([Properties].self, forKey: .properties)
@@ -105,6 +108,13 @@ struct FilesTemplate:ViewProtocol,Codable{
             bottomViews.append(files)
             
         }
+        
+        if let footer = driveFooter {
+            bottomViews.append(footer)
+            
+        }
+        
+        
         
         headerViews.sort(){$0.order!<$1.order!}
         for view in headerViews {
